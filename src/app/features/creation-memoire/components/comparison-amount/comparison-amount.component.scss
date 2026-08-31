@@ -1,0 +1,22 @@
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  font-size: 9px;
+
+  &__label {
+    color: var(--star-text-light);
+    white-space: nowrap;
+  }
+
+  &__value {
+    font-weight: 600;
+    color: var(--star-text-dark);
+    white-space: nowrap;
+
+    &--accent {
+      color: #c2410c;
+    }
+  }
+}

@@ -1,0 +1,43 @@
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  background-color: white;
+  border: 1px solid var(--star-border);
+  border-radius: 8px 8px 0 0;
+  border-bottom: none;
+
+  &__title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--star-text-dark);
+    margin: 0;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 8px;
+  }
+}
+
+.btn {
+  height: 32px;
+  padding: 0 16px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+
+  &--primary {
+    background-color: var(--star-primary);
+    color: white;
+  }
+
+  &--outline {
+    background-color: white;
+    border: 1px solid var(--star-border-dark);
+    color: var(--star-text-dark);
+  }
+}

@@ -1,0 +1,46 @@
+<ng-container *ngIf="estPageLogin; else appAvecShell">
+  <router-outlet></router-outlet>
+</ng-container>
+
+<ng-template #appAvecShell>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar__logo">
+        <img src="logo-star.svg" alt="STAR Assurances" class="sidebar__logo-img" />
+      </div>
+
+      <nav class="sidebar__nav">
+        <ul>
+          <li *ngFor="let item of navItems">
+            <a [routerLink]="item.path" routerLinkActive="active" [routerLinkActiveOptions]="{exact: item.path === '/'}">
+              {{ item.label }}
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="sidebar__user" *ngIf="authService.utilisateur$ | async as utilisateur">
+        <div class="sidebar__avatar">{{ utilisateur.initiales }}</div>
+        <div class="sidebar__user-info">
+          <div class="sidebar__user-name">{{ utilisateur.nom }}</div>
+          <div class="sidebar__user-role">{{ labelsRole[utilisateur.role] }}</div>
+        </div>
+        <button class="sidebar__logout" (click)="onDeconnexion()" title="Deconnexion">&#8618;</button>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <header class="topbar">
+        <h1 class="topbar__title">{{ pageTitle }}</h1>
+        <div class="topbar__actions">
+          <div class="topbar__bell">🔔</div>
+          <div class="topbar__avatar" *ngIf="authService.utilisateur$ | async as utilisateur">{{ utilisateur.initiales }}</div>
+        </div>
+      </header>
+
+      <main class="main-content__body">
+        <router-outlet></router-outlet>
+      </main>
+    </div>
+  </div>
+</ng-template>

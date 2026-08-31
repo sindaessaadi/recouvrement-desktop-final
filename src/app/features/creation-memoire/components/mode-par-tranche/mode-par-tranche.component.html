@@ -1,0 +1,126 @@
+<div class="mode">
+  <div class="field field--nb">
+    <label>Nombre de tranches</label>
+    <input
+      type="number"
+      min="1"
+      max="20"
+      [ngModel]="nbTranches"
+      (ngModelChange)="handleNbChange($event)"
+      placeholder="Ex. 3"
+    />
+  </div>
+
+  <div class="tranches" *ngIf="n > 0">
+    <div class="table-wrapper">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>TRANCHE</th>
+            <th>MONTANT ({{ devise }})</th>
+            <th>LIBELLE</th>
+            <th>FRAIS ({{ devise }})</th>
+            <th>TAXES ({{ devise }})</th>
+            <th>DATE PREVUE</th>
+            <th>STATUT</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of rows; let i = index">
+            <td><span class="tranche-num">{{ i + 1 }}</span></td>
+            <td>
+              <input
+                *ngIf="i !== n - 1"
+                type="text"
+                inputmode="decimal"
+                [ngModel]="row.montant"
+                (ngModelChange)="handleAmountChange(i, 'montant', $event)"
+                placeholder="0"
+                class="input-md"
+              />
+              <input
+                *ngIf="i === n - 1"
+                type="text"
+                readonly
+                [value]="format.fmt(lastMontant)"
+                class="input-md input-md--readonly"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                [ngModel]="row.libelle"
+                (ngModelChange)="updateRow(i, 'libelle', $event)"
+                class="input-md"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                inputmode="decimal"
+                [ngModel]="row.frais"
+                (ngModelChange)="handleAmountChange(i, 'frais', $event)"
+                placeholder="0"
+                class="input-sm"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                inputmode="decimal"
+                [ngModel]="row.taxes"
+                (ngModelChange)="handleAmountChange(i, 'taxes', $event)"
+                placeholder="0"
+                class="input-sm"
+              />
+            </td>
+            <td>
+              <input
+                type="date"
+                [ngModel]="row.date"
+                (ngModelChange)="updateRow(i, 'date', $event)"
+                [min]="minDate(i)"
+                [disabled]="isDateDisabled(i)"
+                class="input-date"
+                [class.input-date--disabled]="isDateDisabled(i)"
+              />
+            </td>
+            <td>
+              <span class="badge" [class.badge--cours]="statut(i) === 'En cours'" [class.badge--planifie]="statut(i) !== 'En cours'">
+                {{ statut(i) }}
+              </span>
+            </td>
+          </tr>
+
+          <tr class="total-row">
+            <td class="total-label">Total</td>
+            <td class="total-value">{{ format.fmt(totalMontant) }}</td>
+            <td></td>
+            <td class="total-value" [class.total-value--warn]="fraisMismatch">{{ format.fmt(totalFraisSaisi) }}</td>
+            <td class="total-value" [class.total-value--warn]="taxesMismatch">{{ format.fmt(totalTaxesSaisi) }}</td>
+            <td></td>
+            <td class="total-value total-value--big">{{ format.fmt(totalGeneral) }} {{ devise }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alerts">
+      <div class="alert alert--warn" *ngIf="depassement">
+        &#9888;&#65039; La somme des montants depasse le principal ({{ format.fmt(principal) }} {{ devise }}) - corrigez les valeurs.
+      </div>
+      <div class="alert alert--warn" *ngIf="fraisMismatch">
+        &#9888;&#65039; Le total des frais saisis ({{ format.fmt(totalFraisSaisi) }} {{ devise }}) ne correspond pas au frais a repartir ({{ format.fmt(frais) }} {{ devise }}).
+      </div>
+      <div class="alert alert--warn" *ngIf="taxesMismatch">
+        &#9888;&#65039; Le total des taxes saisies ({{ format.fmt(totalTaxesSaisi) }} {{ devise }}) ne correspond pas a la taxe a repartir ({{ format.fmt(taxe) }} {{ devise }}).
+      </div>
+      <div class="alert alert--warn" *ngIf="datesIncompletes">
+        &#9888;&#65039; Renseignez la date prevue de chaque tranche.
+      </div>
+      <div class="alert alert--success" *ngIf="toutCorrect">
+        &#9989; La repartition couvre le principal ({{ format.fmt(principal) }} {{ devise }}) ; frais et taxes inclus, total a regler {{ format.fmt(totalGeneral) }} {{ devise }}.
+      </div>
+    </div>
+  </div>
+</div>

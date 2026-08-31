@@ -1,0 +1,47 @@
+<div class="overlay" (click)="onClose()">
+  <div class="modal" (click)="stopPropagation($event)">
+    <div class="modal__header">
+      <h3 class="modal__title">Detail du paiement {{ paiement.id }}</h3>
+      <button class="modal__close" (click)="onClose()">&times;</button>
+    </div>
+
+    <div class="modal__body">
+      <div class="row-between">
+        <span class="label">Statut</span>
+        <app-badge [label]="statutLabel[paiement.statut]" [cls]="statutCls[paiement.statut]"></app-badge>
+      </div>
+
+      <div class="panel">
+        <div class="panel__title">Informations generales</div>
+        <div class="info-grid">
+          <div *ngFor="let info of infos">
+            <div class="info-grid__label">{{ info[0] }}</div>
+            <div class="info-grid__value">{{ info[1] }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="montant-box">
+        <span class="montant-box__label">Montant recu</span>
+        <span class="montant-box__value">{{ paiement.montant }} {{ paiement.devise }}</span>
+      </div>
+
+      <div *ngIf="paiement.anomalie" class="anomalie-box">
+        <span>&#9888;</span>
+        <div>
+          <div class="anomalie-box__title">Anomalie detectee</div>
+          <div class="anomalie-box__text">Ce paiement necessite une verification.</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="label mb-1">Commentaire</div>
+        <div class="commentaire-box">{{ paiement.commentaire }}</div>
+      </div>
+    </div>
+
+    <div class="modal__footer">
+      <button class="btn btn--primary" (click)="onClose()">Fermer</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,148 @@
+<div class="stack">
+  <app-formulaire-paiement *ngIf="showForm" (closed)="showForm = false" (saved)="handleSave($event)"></app-formulaire-paiement>
+  <app-paiement-detail-modal *ngIf="detailPaiement as dp" [paiement]="dp" (closed)="closeDetail()"></app-paiement-detail-modal>
+
+  <div *ngIf="toastMessage" class="toast">{{ toastMessage }}</div>
+
+  <!-- KPI -->
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="kpi__label">Encaisse ce mois</div>
+      <div class="kpi__value kpi__value--primary">3 535 DT</div>
+      <div class="kpi__sub">{{ paiements.length }} paiements</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi__label">Reste a recouvrer</div>
+      <div class="kpi__value kpi__value--danger">2 375 DT</div>
+      <div class="kpi__sub">Sur memoires en cours</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi__label">Taux d'absorption</div>
+      <div class="taux">
+        <div class="kpi__value">{{ tauxAbsorption }}%</div>
+        <div class="taux__bar"><div class="taux__fill" [style.width.%]="tauxAbsorption"></div></div>
+      </div>
+    </div>
+    <div class="kpi">
+      <div class="kpi__label">Anomalies detectees</div>
+      <div class="kpi__value" style="color:#ea580c">{{ nbAnomalies }}</div>
+      <div class="kpi__sub" style="color:#f97316">Verification requise</div>
+    </div>
+  </div>
+
+  <!-- Filtres -->
+  <div class="card">
+    <div class="filters">
+      <div class="field field--grow">
+        <label>Client / N° Memoire</label>
+        <input [(ngModel)]="search" placeholder="Rechercher..." />
+      </div>
+      <div class="field">
+        <label>Date de</label>
+        <input type="date" />
+      </div>
+      <div class="field">
+        <label>à</label>
+        <input type="date" />
+      </div>
+      <div class="field">
+        <label>Statut</label>
+        <select [(ngModel)]="filterStatut">
+          <option value="">-- Tous --</option>
+          <option *ngFor="let s of statutOptionsSansVide" [value]="s">{{ statutLabel[s] }}</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Mode</label>
+        <select [(ngModel)]="filterMode">
+          <option value="">-- Tous --</option>
+          <option *ngFor="let m of modes" [value]="m">{{ m }}</option>
+        </select>
+      </div>
+      <button class="btn btn--outline" (click)="resetFilters()">&#8635; Reinitialiser</button>
+      <button class="btn btn--primary"><span class="icon-inline"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span> Rechercher</button>
+    </div>
+  </div>
+
+  <!-- Onglets -->
+  <div class="tabs">
+    <button class="tabs__item" [class.tabs__item--active]="tab === 'historique'" (click)="setTab('historique')">
+      Historique des paiements
+    </button>
+    <button class="tabs__item" [class.tabs__item--active]="tab === 'suivi'" (click)="setTab('suivi')">
+      Suivi par memoire
+    </button>
+  </div>
+
+  <!-- Historique -->
+  <div *ngIf="tab === 'historique'" class="card card--table">
+    <div class="card__header">
+      <h2 class="card__title">Paiements recus ({{ filtered.length }})</h2>
+      <div class="card__actions">
+        <button class="btn btn--outline" (click)="handleExport()">&#8595; Exporter Excel</button>
+        <button class="btn btn--primary" (click)="showForm = true">+ Enregistrer un paiement</button>
+      </div>
+    </div>
+    <div class="table-wrapper">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>N° PAIEMENT</th><th>DATE</th><th>CLIENT</th><th>N° MEMOIRE</th><th>MONTANT</th>
+            <th>DEVISE</th><th>MODE</th><th>TYPE</th><th>STATUT</th><th>ANOMALIE</th><th>ACTIONS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of filtered" [class.table__row--anomalie]="p.anomalie">
+            <td class="table__nom">{{ p.id }}</td>
+            <td>{{ p.date }}</td>
+            <td class="table__strong">{{ p.client }}</td>
+            <td class="table__nom">{{ p.memoire }}</td>
+            <td class="table__strong">{{ p.montant }}</td>
+            <td><app-badge [label]="p.devise" [cls]="deviseCls[p.devise] || 'badge--neutral'"></app-badge></td>
+            <td>{{ p.mode }}</td>
+            <td><app-badge [label]="p.type" [cls]="typeCls[p.type]"></app-badge></td>
+            <td><app-badge [label]="statutLabel[p.statut]" [cls]="statutCls[p.statut]"></app-badge></td>
+            <td>
+              <span *ngIf="p.anomalie" class="alerte">&#9888; Oui</span>
+              <span *ngIf="!p.anomalie" class="alerte alerte--ok">-</span>
+            </td>
+            <td><button class="link-btn" (click)="openDetail(p)"><span class="icon-inline"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"></path><circle cx="12" cy="12" r="3"></circle></svg></span> Voir</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card__footer">{{ filtered.length }} paiement(s)</div>
+  </div>
+
+  <!-- Suivi par mémoire -->
+  <div *ngIf="tab === 'suivi'" class="card card--table">
+    <div class="card__header"><h2 class="card__title">Suivi des encaissements par memoire</h2></div>
+    <div class="table-wrapper">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>N° MEMOIRE</th><th>CLIENT</th><th>MONTANT DÛ</th><th>ENCAISSE</th>
+            <th>RESTE À PAYER</th><th>NB PAIEMENTS</th><th>PROGRESSION</th><th>ACTIONS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let m of suiviMemoires">
+            <td class="table__nom">{{ m.memoire }}</td>
+            <td class="table__strong">{{ m.client }}</td>
+            <td>{{ m.montantDu }}</td>
+            <td class="table__strong" style="color:var(--star-success-text)">{{ m.encaisse }}</td>
+            <td class="table__strong" style="color:#dc2626">{{ m.reste }}</td>
+            <td class="table__center">{{ m.nb }}</td>
+            <td>
+              <div class="taux">
+                <div class="taux__bar"><div class="taux__fill" [style.width.%]="m.progression"></div></div>
+                <span>{{ m.progression }}%</span>
+              </div>
+            </td>
+            <td><button class="link-btn" (click)="voirMemoire(m.memoire)"><span class="icon-inline"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"></path><circle cx="12" cy="12" r="3"></circle></svg></span> Voir</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

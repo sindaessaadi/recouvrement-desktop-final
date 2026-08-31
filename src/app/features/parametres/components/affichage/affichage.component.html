@@ -1,0 +1,67 @@
+<div class="card" *ngIf="preferences">
+  <h2 class="card__title">Preferences d'affichage</h2>
+  <p class="card__description">
+    Personnalisez l'apparence de l'application sur ce poste.
+  </p>
+
+  <div class="grid">
+    <div class="field">
+      <label>Theme</label>
+  <div class="toggle-group">
+  <button
+    class="toggle-btn"
+    [class.toggle-btn--active]="preferences.theme === 'clair'"
+    (click)="choisirTheme('clair')"
+  >
+    Clair
+  </button>
+  <button
+    class="toggle-btn"
+    [class.toggle-btn--active]="preferences.theme === 'sombre'"
+    (click)="choisirTheme('sombre')"
+  >
+    Sombre
+  </button>
+</div>
+    </div>
+
+    <div class="field">
+      <label>Langue de l'interface</label>
+      <select [(ngModel)]="preferences.langue">
+        <option value="Francais">Francais</option>
+        <option value="Arabe">Arabe</option>
+        <option value="English">English</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Densite des tableaux</label>
+      <div class="toggle-group">
+        <button
+          class="toggle-btn"
+          [class.toggle-btn--active]="preferences.densite === 'confort'"
+          (click)="preferences.densite = 'confort'"
+        >
+          Confortable
+        </button>
+        <button
+          class="toggle-btn"
+          [class.toggle-btn--active]="preferences.densite === 'compact'"
+          (click)="preferences.densite = 'compact'"
+        >
+          Compact
+        </button>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Format de date</label>
+      <select [(ngModel)]="preferences.formatDate">
+        <option value="JJ/MM/AAAA">JJ/MM/AAAA</option>
+        <option value="AAAA-MM-JJ">AAAA-MM-JJ</option>
+      </select>
+    </div>
+  </div>
+
+  <button class="btn btn--primary" (click)="onEnregistrer()">Enregistrer</button>
+</div>

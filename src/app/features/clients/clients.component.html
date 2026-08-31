@@ -1,0 +1,18 @@
+<app-liste-clients
+  *ngIf="!clientSelectionne"
+  [clients]="clients"
+  (voirClient)="onVoirClient($event)"
+  (nouveauClient)="onOuvrirNouveauClient()"
+></app-liste-clients>
+
+<app-fiche-client
+  *ngIf="clientSelectionne"
+  [client]="clientSelectionne"
+  (retour)="onRetour()"
+></app-fiche-client>
+
+<app-nouveau-client-modal
+  *ngIf="modalNouveauClientOuvert"
+  (close)="onFermerNouveauClient()"
+  (creer)="onCreerClient($event)"
+></app-nouveau-client-modal>

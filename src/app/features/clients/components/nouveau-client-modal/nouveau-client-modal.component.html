@@ -1,0 +1,66 @@
+<div class="overlay" (click)="onClose()">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <div class="modal__header">
+      <h3 class="modal__title">Nouveau client</h3>
+      <button class="modal__close" (click)="onClose()">&#10005;</button>
+    </div>
+
+    <form (ngSubmit)="onSubmit()">
+      <div class="modal__body">
+        <div class="field field--full">
+          <label class="field__label">Nom *</label>
+          <input class="field__input" type="text" [(ngModel)]="nom" name="nom" placeholder="Nom du client" />
+        </div>
+        <div class="field field--full">
+          <label class="field__label">Raison sociale</label>
+          <input class="field__input" type="text" [(ngModel)]="raisonSociale" name="raisonSociale" />
+        </div>
+
+        <div class="grid">
+          <div class="field">
+            <label class="field__label">Matricule fiscal</label>
+            <input class="field__input" type="text" [(ngModel)]="matricule" name="matricule" />
+          </div>
+          <div class="field">
+            <label class="field__label">CIN</label>
+            <input class="field__input" type="text" [(ngModel)]="cin" name="cin" />
+          </div>
+          <div class="field">
+            <label class="field__label">Telephone</label>
+            <input class="field__input" type="text" [(ngModel)]="telephone" name="telephone" />
+          </div>
+          <div class="field">
+            <label class="field__label">Email</label>
+            <input class="field__input" type="email" [(ngModel)]="email" name="email" />
+          </div>
+          <div class="field">
+            <label class="field__label">Statut</label>
+            <select class="field__input" [(ngModel)]="statut" name="statut">
+              <option *ngFor="let s of statutOptions" [value]="s">{{ s }}</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="field__label">Charge (agent)</label>
+            <input class="field__input" type="text" [(ngModel)]="charge" name="charge" />
+          </div>
+          <div class="field">
+            <label class="field__label">Annee d'appartenance</label>
+            <input class="field__input" type="number" [(ngModel)]="anneeAppartenance" name="anneeAppartenance" />
+          </div>
+        </div>
+
+        <div class="field field--full">
+          <label class="field__label">Adresse</label>
+          <input class="field__input" type="text" [(ngModel)]="adresse" name="adresse" />
+        </div>
+
+        <div class="modal__erreur" *ngIf="erreur">{{ erreur }}</div>
+      </div>
+
+      <div class="modal__footer">
+        <button type="button" class="btn btn--outline" (click)="onClose()">Annuler</button>
+        <button type="submit" class="btn btn--primary">Creer le client</button>
+      </div>
+    </form>
+  </div>
+</div>

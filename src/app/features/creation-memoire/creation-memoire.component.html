@@ -1,0 +1,104 @@
+<app-step-indicator [step]="step"></app-step-indicator>
+
+<div class="summary-bar-wrapper" *ngIf="step > 1">
+  <app-quittance-summary-bar
+    [quittance]="quittanceSelectionnee"
+    [client]="selectedClient"
+    [contact]="contactClient"
+    [dateLimite]="dateLimiteLabel"
+    [montantForce]="montantForce"
+    (appliquerForcage)="onAppliquerForcage($event)"
+    (annulerForcage)="onAnnulerForcage()"
+    (voirContrat)="onVoirContrat($event)"
+  ></app-quittance-summary-bar>
+</div>
+
+<app-selection-client
+  *ngIf="step === 1"
+  (clientSelected)="onClientSelected($event)"
+></app-selection-client>
+
+<app-selection-quittance
+  *ngIf="step === 2"
+  [selectedClient]="selectedClient"
+  (quittanceSelected)="onQuittanceSelected($event)"
+  (voirContrat)="onVoirContrat($event)"
+></app-selection-quittance>
+
+<app-details-memoire
+  *ngIf="step === 3"
+  [clientPrincipal]="quittanceSelectionnee"
+  [contact]="contactClient"
+  [dateCreation]="dateCreation"
+  [delaiReglement]="delaiReglement"
+  [dateLimiteLabel]="dateLimiteLabel"
+  [montantForce]="montantForce"
+  [deviseSelectionnee]="deviseSelectionnee"
+  [transfertConfirme]="transfertConfirme"
+  [totalAvecFraisTaxe]="totalAvecFraisTaxe"
+  (delaiChange)="onDelaiChange($event)"
+  (fichierChange)="onFichierChange($event)"
+  (appliquerForcage)="onAppliquerForcage($event)"
+  (annulerForcage)="onAnnulerForcage()"
+  (deviseChange)="onDeviseChange($event)"
+  (transfertToggle)="onTransfertToggle($event)"
+></app-details-memoire>
+
+<app-step4-echeancier
+  *ngIf="step === 4"
+  [principal]="principalConverti"
+  [frais]="fraisConverti"
+  [taxe]="taxeConvertie"
+  [devise]="deviseActive"
+  (echeancierChange)="onEcheancierChange($event)"
+  (commentaireChange)="onEcheancierCommentaireChange($event)"
+  (validChange)="onEcheancierValidChange($event)"
+></app-step4-echeancier>
+
+<app-step5-validation
+  *ngIf="step === 5"
+  [contact]="contactClient"
+  [clientNom]="selectedClient ?? ''"
+  [numeroMemoire]="numeroMemoireCree"
+  [dateCreation]="dateCreation"
+  [delaiReglement]="delaiReglement"
+  [dateLimiteLabel]="dateLimiteLabel"
+  [totalAvecFraisTaxe]="totalAvecFraisTaxe"
+  [deviseActive]="deviseActive"
+  [transfertConfirme]="transfertConfirme"
+  [montantConverti]="totalAvecFraisTaxe * tauxActif"
+  (retour)="onRetourListe()"
+></app-step5-validation>
+
+<div class="wizard-actions">
+  <button
+    *ngIf="step > 1"
+    (click)="previousStep()"
+    class="btn btn--ghost"
+  >
+    ← Précédent
+  </button>
+  <button
+    *ngIf="step === 1"
+    (click)="previousStep()"
+    class="btn btn--ghost"
+  >
+    Annuler
+  </button>
+  <button
+    *ngIf="step < 5"
+    (click)="nextStep()"
+    [disabled]="!canProceed()"
+    class="btn"
+    [class.btn--primary]="canProceed()"
+    [class.btn--disabled]="!canProceed()"
+  >
+    Étape suivante →
+  </button>
+</div>
+
+<app-contrat-detail-modal
+  *ngIf="contratOuvert"
+  [contrat]="contratOuvert"
+  (close)="onFermerContrat()"
+></app-contrat-detail-modal>

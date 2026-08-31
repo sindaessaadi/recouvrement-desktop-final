@@ -1,0 +1,69 @@
+<div class="card" *ngIf="preferences">
+  <h2 class="card__title">Preferences de notification</h2>
+  <p class="card__description">
+    Choisissez comment et quand vous souhaitez etre alerte.
+  </p>
+
+  <div class="row">
+    <div>
+      <div class="row__label">Notifications par e-mail</div>
+      <div class="row__sub">Recevoir un recapitulatif par e-mail</div>
+    </div>
+    <button
+      class="toggle"
+      [class.toggle--on]="preferences.notificationsEmail"
+      (click)="preferences.notificationsEmail = !preferences.notificationsEmail"
+    >
+      <span class="toggle__dot"></span>
+    </button>
+  </div>
+
+  <div class="row row--bordered">
+    <div>
+      <div class="row__label">Notifications dans l'application</div>
+      <div class="row__sub">Cloche de notification en haut a droite</div>
+    </div>
+    <button
+      class="toggle"
+      [class.toggle--on]="preferences.notificationsApp"
+      (click)="preferences.notificationsApp = !preferences.notificationsApp"
+    >
+      <span class="toggle__dot"></span>
+    </button>
+  </div>
+
+  <div class="row row--bordered">
+    <div>
+      <div class="row__label">Alertes de relance echue</div>
+      <div class="row__sub">Etre notifie quand une relance arrive a echeance</div>
+    </div>
+    <button
+      class="toggle"
+      [class.toggle--on]="preferences.alerteRelanceEchue"
+      (click)="preferences.alerteRelanceEchue = !preferences.alerteRelanceEchue"
+    >
+      <span class="toggle__dot"></span>
+    </button>
+  </div>
+
+  <div class="row row--bordered">
+    <div>
+      <div class="row__label">Alertes d'impayes</div>
+      <div class="row__sub">Etre notifie des qu'une quittance passe en impaye</div>
+    </div>
+    <button
+      class="toggle"
+      [class.toggle--on]="preferences.alerteImpaye"
+      (click)="preferences.alerteImpaye = !preferences.alerteImpaye"
+    >
+      <span class="toggle__dot"></span>
+    </button>
+  </div>
+
+  <div class="field row--bordered">
+    <label>Seuil d'alerte impayes (DT)</label>
+    <input type="number" [(ngModel)]="preferences.seuilAlerteImpaye" class="field__input" />
+  </div>
+
+  <button class="btn btn--primary" (click)="onEnregistrer()">Enregistrer</button>
+</div>

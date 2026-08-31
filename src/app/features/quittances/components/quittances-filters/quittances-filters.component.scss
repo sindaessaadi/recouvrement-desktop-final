@@ -1,0 +1,62 @@
+.filters {
+  background-color: white;
+  border: 1px solid var(--star-border);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+
+  &__title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--star-text-dark);
+    margin: 0 0 20px 0;
+  }
+
+  &__row {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    min-width: 140px;
+
+    &--grow {
+      flex: 1;
+    }
+
+    label {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--star-text-gray);
+      margin-bottom: 4px;
+    }
+
+    select,
+    input {
+      height: 36px;
+      padding: 0 12px;
+      border: 1px solid var(--star-border-dark);
+      border-radius: 6px;
+      font-size: 11px;
+      color: var(--star-text-dark);
+    }
+  }
+}
+
+.btn {
+  height: 36px;
+  padding: 0 16px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+
+  &--primary {
+    background-color: var(--star-primary);
+    color: white;
+  }
+}

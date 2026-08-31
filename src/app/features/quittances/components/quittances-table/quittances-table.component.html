@@ -1,0 +1,65 @@
+<div class="table-wrapper">
+  <table class="table">
+    <thead>
+      <tr>
+        <th class="table__checkbox-col"></th>
+        <th>Client</th>
+        <th>Systeme</th>
+        <th>Branche</th>
+        <th>Code agence</th>
+        <th>Police</th>
+        <th>Quittance</th>
+        <th>Date emission</th>
+        <th>Montant impaye</th>
+        <th>Frais</th>
+        <th>Taxe</th>
+        <th>FGA</th>
+        <th>Statut</th>
+        <th>Memoire</th>
+        <th>Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngIf="quittances.length === 0">
+        <td colspan="14" class="table__empty">
+          Aucun resultat ne correspond a votre recherche.
+        </td>
+      </tr>
+
+      <tr *ngFor="let q of quittances" [class.table__row--selected]="q.checked">
+        <td>
+          <button
+            type="button"
+            class="radio"
+            [class.radio--checked]="q.checked"
+            (click)="onToggle(q.id)"
+            title="Une seule quittance peut etre selectionnee a la fois"
+          >
+            <span *ngIf="q.checked">&#10003;</span>
+          </button>
+        </td>
+        <td class="table__client">{{ q.client }}</td>
+        <td>{{ q.identifiant }}</td>
+        <td>{{ q.branche }}</td>
+        <td class="table__strong">{{ q.agence }}</td>
+        <td class="table__link">{{ q.police }}</td>
+        <td class="table__link">{{ q.id }}</td>
+        <td>{{ q.emission }}</td>
+        <td class="table__strong">{{ format.fmt(q.montant) }} DT</td>
+        <td>{{ format.fmt(q.frais) }} DT</td>
+        <td>{{ format.fmt(q.taxe) }} DT</td>
+        <td>{{ format.fmt(q.fga) }} DT</td>
+        <td>
+          <span [class]="classeStatut(q.statut)">{{ libelleStatut(q.statut) }}</span>
+        </td>
+        <td>
+          <span *ngIf="q.hasMemoire" class="icon icon--success">&#10003;</span>
+          <span *ngIf="!q.hasMemoire" class="icon icon--danger">&#10007;</span>
+        </td>
+        <td>
+          <button class="link-btn" (click)="onVoirDetail(q)">Voir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

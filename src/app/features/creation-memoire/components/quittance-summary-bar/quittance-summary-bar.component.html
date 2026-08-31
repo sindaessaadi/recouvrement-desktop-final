@@ -1,0 +1,128 @@
+<div class="bar" *ngIf="quittance || client; else vide">
+  <div class="bar__header">
+    <h3 class="bar__title">Memoire en cours</h3>
+    <div class="bar__ref">Nouveau memoire</div>
+  </div>
+
+  <div class="bar__content">
+    <!-- Client -->
+    <div class="bar__col">
+      <div class="bar__label">Client</div>
+      <div class="bar__client-name">{{ clientName }}</div>
+      <div class="bar__contact" *ngIf="contact">
+        <div>{{ contact.tel }}</div>
+        <div>{{ contact.email }}</div>
+      </div>
+    </div>
+
+    <ng-container *ngIf="!quittance; else avecQuittance">
+      <div class="bar__col bar__col--message">
+        <span>Selectionnez une quittance pour voir les details.</span>
+      </div>
+    </ng-container>
+
+    <ng-template #avecQuittance>
+      <!-- Quittance -->
+      <div class="bar__col">
+        <div class="bar__label-row">
+          <div class="bar__label">Quittance selectionnee</div>
+          <button class="bar__link" (click)="onVoirContrat()">Contrat</button>
+        </div>
+        <div class="bar__box">
+          <div class="bar__box-row">
+            <span class="bar__box-id">{{ quittance!.id }}</span>
+            <span class="bar__badge">IMPAYE</span>
+          </div>
+          <div class="bar__box-sub">{{ quittance!.police }}</div>
+          <div class="bar__box-row">
+            <span class="bar__box-label">Echeance</span>
+            <span class="bar__box-value">{{ quittance!.echeance }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Montants -->
+      <div class="bar__col">
+        <div class="bar__label-row">
+          <div class="bar__label">Montant net, Frais, Taxe</div>
+          <ng-container *ngIf="isTunisaire">
+            <button *ngIf="montantForce === null" class="bar__link bar__link--warn" (click)="ouvrirForcage()">
+              Forcage
+            </button>
+            <button *ngIf="montantForce !== null" class="bar__link bar__link--warn" (click)="onAnnulerForcage()">
+              Annuler le forcage
+            </button>
+          </ng-container>
+        </div>
+
+        <div class="bar__forcage" *ngIf="isTunisaire && forcageOuvert">
+          <label>Nouveau montant net (DT)</label>
+          <div class="bar__forcage-row">
+            <input
+              type="text"
+              [(ngModel)]="saisieMontant"
+              (keydown.enter)="onAppliquerForcage()"
+              (keydown.escape)="forcageOuvert = false"
+            />
+            <button class="btn btn--warn" (click)="onAppliquerForcage()">Appliquer</button>
+            <button class="btn btn--outline" (click)="forcageOuvert = false">Annuler</button>
+          </div>
+        </div>
+
+        <div class="bar__montants" *ngIf="montantForce === null; else comparaison">
+          <div class="bar__box-row">
+            <span class="bar__box-label">Montant net</span>
+            <span class="bar__box-value">{{ format.fmt(montantOriginal) }} DT</span>
+          </div>
+          <div class="bar__box-row">
+            <span class="bar__box-label">Frais</span>
+            <span class="bar__box-value">{{ format.fmt(fraisOriginal) }} DT</span>
+          </div>
+          <div class="bar__box-row">
+            <span class="bar__box-label">Taxe</span>
+            <span class="bar__box-value">{{ format.fmt(taxeOriginal) }} DT</span>
+          </div>
+        </div>
+
+        <ng-template #comparaison>
+          <div class="bar__comparison">
+            <div class="bar__comparison-col">
+              <div class="bar__comparison-title">Ancien</div>
+              <app-comparison-amount label="Montant net" [value]="montantOriginal"></app-comparison-amount>
+              <app-comparison-amount label="Frais" [value]="fraisOriginal"></app-comparison-amount>
+              <app-comparison-amount label="Taxe" [value]="taxeOriginal"></app-comparison-amount>
+              <app-comparison-amount label="Total TTC" [value]="totalOriginal"></app-comparison-amount>
+            </div>
+            <div class="bar__comparison-col bar__comparison-col--warn">
+              <div class="bar__comparison-title bar__comparison-title--warn">Nouveau</div>
+              <app-comparison-amount label="Montant net" [value]="montantEffectif" [accent]="true"></app-comparison-amount>
+              <app-comparison-amount label="Frais" [value]="fraisEffectif" [accent]="true"></app-comparison-amount>
+              <app-comparison-amount label="Taxe" [value]="taxeEffectif" [accent]="true"></app-comparison-amount>
+              <app-comparison-amount label="Total TTC" [value]="totalEffectif" [accent]="true"></app-comparison-amount>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+
+      <!-- Total -->
+      <div class="bar__col bar__col--total">
+        <span class="bar__total-label">Total TTC a regler</span>
+        <span class="bar__total-value" *ngIf="montantForce === null">{{ format.fmt(totalEffectif) }} DT</span>
+        <div class="bar__total-row" *ngIf="montantForce !== null">
+          <span class="bar__total-old">{{ format.fmt(totalOriginal) }} DT</span>
+          <span class="bar__total-value bar__total-value--warn">{{ format.fmt(totalEffectif) }} DT</span>
+        </div>
+        <div class="bar__date-limite" *ngIf="dateLimite">Date limite : {{ dateLimite }}</div>
+      </div>
+    </ng-template>
+  </div>
+</div>
+
+<ng-template #vide>
+  <div class="bar">
+    <div class="bar__header">
+      <h3 class="bar__title">Memoire en cours</h3>
+    </div>
+    <div class="bar__empty">Aucune quittance selectionnee pour le moment.</div>
+  </div>
+</ng-template>

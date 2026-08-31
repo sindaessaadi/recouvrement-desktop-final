@@ -1,0 +1,10 @@
+<div class="nav">
+  <button
+    *ngFor="let onglet of onglets"
+    class="nav__item"
+    [class.nav__item--active]="ongletActif === onglet.key"
+    (click)="selectionner(onglet.key)"
+  >
+    {{ onglet.label }}
+  </button>
+</div>

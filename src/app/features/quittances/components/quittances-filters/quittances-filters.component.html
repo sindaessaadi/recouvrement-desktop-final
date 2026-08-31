@@ -1,0 +1,40 @@
+<div class="filters">
+  <h2 class="filters__title">Filtres de recherche</h2>
+
+  <div class="filters__row">
+    <div class="filters__field">
+      <label>Systeme</label>
+      <select [ngModel]="systeme" (ngModelChange)="onSystemeChange($event)">
+        <option [ngValue]="null">Selectionner un systeme</option>
+        <option *ngFor="let s of systemeOptions" [value]="s">{{ s }}</option>
+      </select>
+    </div>
+
+    <div class="filters__field">
+      <label>Branche</label>
+      <select [(ngModel)]="branche" (ngModelChange)="onChamp()">
+        <option [ngValue]="null">-- Toutes --</option>
+        <option *ngFor="let b of brancheOptions" [value]="b">{{ b }}</option>
+      </select>
+    </div>
+
+    <div class="filters__field">
+  <label>Date emission</label>
+  <input type="date" [(ngModel)]="dateEmission" (ngModelChange)="onChamp()" />
+</div>
+
+    <div class="filters__field filters__field--grow">
+      <label>Recherche</label>
+      <input
+        type="text"
+        placeholder="Client, police, quittance, systeme..."
+        [(ngModel)]="recherche"
+        (ngModelChange)="onChamp()"
+      />
+    </div>
+
+    <button class="btn btn--primary" (click)="reinitialiser()">
+      Reinitialiser
+    </button>
+  </div>
+</div>

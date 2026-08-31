@@ -1,0 +1,15 @@
+<div class="page">
+  <app-quittances-filters (filtresChanges)="onFiltresChanges($event)"></app-quittances-filters>
+
+  <app-quittances-toolbar
+    [nombreSelectionne]="nombreSelectionne"
+    (exporter)="onExporter()"
+    (genererMemoire)="onGenererMemoire()"
+  ></app-quittances-toolbar>
+
+  <app-quittances-table
+    [quittances]="quittancesFiltrees"
+    (toggleSelection)="onToggleSelection($event)"
+    (voirDetail)="onVoirDetail($event)"
+  ></app-quittances-table>
+</div>

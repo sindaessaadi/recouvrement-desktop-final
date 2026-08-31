@@ -1,0 +1,45 @@
+<div class="card">
+  <h2 class="card__title">Utilisateurs &amp; roles</h2>
+  <p class="card__description">
+    Gerez les comptes ayant acces a l'application et leurs droits.
+  </p>
+
+  <div class="card__actions">
+    <button class="btn btn--primary" (click)="onAjouter()">
+      + Ajouter un utilisateur
+    </button>
+  </div>
+
+  <div class="table-wrapper">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>E-mail</th>
+          <th>Role</th>
+          <th>Statut</th>
+          <th class="table__actions-col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let u of utilisateurs">
+          <td class="table__strong">{{ u.nom }}</td>
+          <td class="table__light">{{ u.email }}</td>
+          <td>
+            <span class="badge badge--info">{{ u.role }}</span>
+          </td>
+          <td>
+            <span class="badge" [class.badge--success]="u.actif" [class.badge--danger]="!u.actif">
+              {{ u.actif ? 'Actif' : 'Suspendu' }}
+            </span>
+          </td>
+          <td class="table__actions-col">
+            <button class="icon-btn" (click)="onSupprimer(u)" title="Supprimer">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

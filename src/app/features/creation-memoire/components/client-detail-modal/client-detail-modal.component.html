@@ -1,0 +1,52 @@
+<div class="overlay" (click)="onClose()">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <div class="modal__header">
+      <h3 class="modal__title">Detail du client {{ clientName }}</h3>
+      <button class="modal__close" (click)="onClose()">&#10005;</button>
+    </div>
+
+    <div class="modal__body">
+      <div class="grid">
+        <div class="field">
+          <div class="field__label">Client</div>
+          <div class="field__value">{{ clientName }}</div>
+        </div>
+        <div class="field">
+          <div class="field__label">ID client</div>
+          <div class="field__value">{{ contact?.identifiant ?? '-' }}</div>
+        </div>
+        <div class="field">
+          <div class="field__label">Telephone</div>
+          <div class="field__value">{{ contact?.tel ?? '-' }}</div>
+        </div>
+        <div class="field">
+          <div class="field__label">Email</div>
+          <div class="field__value">{{ contact?.email ?? '-' }}</div>
+        </div>
+        <div class="field">
+          <div class="field__label">Adresse domicile</div>
+          <div class="field__value">{{ contact?.adresse ?? '-' }}</div>
+        </div>
+        <div class="field">
+          <div class="field__label">Anciennete</div>
+          <div class="field__value">{{ anciennete() }}</div>
+        </div>
+      </div>
+
+      <div class="summary">
+        <div>
+          <div class="field__label">Quittances impayees</div>
+          <div class="summary__nb">{{ summary?.nb ?? 0 }}</div>
+        </div>
+        <div class="summary__right">
+          <div class="field__label">Montant impaye</div>
+          <div class="summary__total">{{ format.fmt(summary?.total ?? 0) }} DT</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal__footer">
+      <button class="btn btn--primary" (click)="onClose()">Fermer</button>
+    </div>
+  </div>
+</div>

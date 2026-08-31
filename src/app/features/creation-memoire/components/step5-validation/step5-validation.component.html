@@ -1,0 +1,70 @@
+<div class="card">
+  <h2 class="card__title">Recapitulatif du memoire</h2>
+
+  <div class="summary">
+    <div class="summary__col">
+      <div class="summary__label">Anciennete</div>
+      <div class="summary__value">{{ anciennete() }}</div>
+    </div>
+    <div class="summary__col">
+      <div class="summary__label">Date de creation</div>
+      <div class="summary__value">{{ dateCreation }}</div>
+    </div>
+    <div class="summary__col">
+      <div class="summary__label">Delai de reglement</div>
+      <div class="summary__value">{{ delaiReglement }} jours</div>
+    </div>
+    <div class="summary__col">
+      <div class="summary__label">Statut</div>
+      <div class="summary__value">Planifie</div>
+    </div>
+    <div class="summary__col">
+      <div class="summary__label">Motif</div>
+      <div class="summary__value">Reglement impayes</div>
+    </div>
+  </div>
+
+  <div class="echeancier">
+    <h3 class="echeancier__title">Echeancier</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>TRANCHE</th>
+          <th>DATE ECHEANCE</th>
+          <th>MONTANT ({{ deviseActive }})</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>{{ dateLimiteLabel }}</td>
+          <td>{{ format.fmt(montantConverti) }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="alert alert--success" *ngIf="transfertConfirme">
+    <span class="icon-inline"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg></span> Memoire transfere en {{ deviseActive }} - montant total {{ format.fmt(montantConverti) }} {{ deviseActive }} (equivalent {{ format.fmt(totalAvecFraisTaxe) }} DT).
+  </div>
+
+  <div class="success" *ngIf="numeroMemoire; else enCours">
+    <div class="success__icon">&#10003;</div>
+    <h2 class="success__title">Memoire cree avec succes</h2>
+    <div class="success__ref">N&#176; {{ numeroMemoire }}</div>
+
+    <div class="success__actions">
+      <button class="btn btn--primary" (click)="onTelechargerPdf()">&#11015; Telecharger (PDF)</button>
+      <button class="btn btn--outline" (click)="onApercuPdf()"><span class="icon-inline"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"></path><circle cx="12" cy="12" r="3"></circle></svg></span> Apercu</button>
+    </div>
+
+    <button class="link-back" (click)="onRetour()">&#8592; Retour a la liste</button>
+  </div>
+
+  <ng-template #enCours>
+    <div class="success">
+      <div class="success__spinner"></div>
+      <h2 class="success__title">Creation du memoire en cours...</h2>
+    </div>
+  </ng-template>
+</div>

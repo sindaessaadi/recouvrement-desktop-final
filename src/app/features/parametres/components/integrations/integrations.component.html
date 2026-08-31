@@ -1,0 +1,32 @@
+<div class="stack">
+  <div class="card">
+    <h2 class="card__title">Cle API</h2>
+    <p class="card__description">
+      Utilisee pour connecter des outils externes a l'application.
+    </p>
+
+    <div class="row">
+      <input type="text" class="row__input" [value]="cleApi" readonly />
+      <button class="btn btn--outline" (click)="regenererCle()">Regenerer</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 class="card__title">Exports automatiques</h2>
+    <p class="card__description">Planifiez l'envoi automatique de rapports.</p>
+
+    <div class="toggle-row">
+      <div>
+        <div class="toggle-row__label">Export Excel hebdomadaire du reporting</div>
+        <div class="toggle-row__sub">Envoye chaque lundi a 08h00</div>
+      </div>
+      <button
+        class="toggle"
+        [class.toggle--on]="exportAutomatique"
+        (click)="exportAutomatique = !exportAutomatique"
+      >
+        <span class="toggle__dot"></span>
+      </button>
+    </div>
+  </div>
+</div>

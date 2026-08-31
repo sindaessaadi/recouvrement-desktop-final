@@ -1,0 +1,49 @@
+<div class="card" *ngIf="organisation">
+  <h2 class="card__title">Parametres de l'organisation</h2>
+  <p class="card__description">
+    Informations generales et regles de gestion utilisees dans les documents.
+  </p>
+
+  <div class="grid">
+    <div class="field">
+      <label>Nom de la compagnie</label>
+      <input type="text" [(ngModel)]="organisation.nomCompagnie" />
+    </div>
+
+    <div class="field">
+      <label>Devise</label>
+      <select [(ngModel)]="organisation.devise">
+        <option value="DT">DT</option>
+        <option value="EUR">EUR</option>
+        <option value="USD">USD</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Prefixe numerotation memoires</label>
+      <input type="text" [(ngModel)]="organisation.prefixeNumerotationMemoires" />
+    </div>
+
+    <div class="field">
+      <label>Delai de relance par defaut (jours)</label>
+      <input type="number" min="1" step="1" [(ngModel)]="organisation.delaiRelanceParDefaut" />
+    </div>
+
+    <div class="field">
+      <label>Taux de TVA (%)</label>
+      <input type="number" min="0" max="100" step="0.1" [(ngModel)]="organisation.tauxTva" />
+    </div>
+
+    <div class="field">
+      <label>Exercice comptable</label>
+      <select [(ngModel)]="organisation.exerciceComptable">
+        <option value="Janvier - Decembre">Janvier - Decembre</option>
+        <option value="Juillet - Juin">Juillet - Juin</option>
+      </select>
+    </div>
+  </div>
+
+  <div *ngIf="erreur" class="error-text">{{ erreur }}</div>
+
+  <button class="btn btn--primary" (click)="onEnregistrer()">Enregistrer</button>
+</div>

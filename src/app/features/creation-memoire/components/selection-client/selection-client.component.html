@@ -1,0 +1,107 @@
+<div class="wizard-step">
+  <div class="card">
+    <h2 class="card__title">Filtres de recherche</h2>
+    <div class="filters">
+      <div class="filters__field">
+        <label class="filters__label">Identifiant client</label>
+        <input
+          type="text"
+          [ngModel]="filterIdentifiant"
+          (ngModelChange)="onIdentifiantChange($event)"
+          placeholder="Ex. CLI-0001"
+          class="filters__input"
+        />
+      </div>
+      <div class="filters__field">
+        <label class="filters__label">Adresse domicile</label>
+        <input type="text" [(ngModel)]="filterAdresse" placeholder="Ville, rue..." class="filters__input" />
+      </div>
+      <div class="filters__field">
+        <label class="filters__label">Adresse mail</label>
+        <input
+          type="text"
+          [ngModel]="filterEmail"
+          (ngModelChange)="onEmailChange($event)"
+          placeholder="nom&#64;email.tn"
+          class="filters__input"
+        />
+      </div>
+      <div class="filters__field">
+        <label class="filters__label">Numéro</label>
+        <input
+          type="text"
+          [ngModel]="filterNumero"
+          (ngModelChange)="onNumeroChange($event)"
+          placeholder="Ex. 22 123 456"
+          class="filters__input"
+        />
+      </div>
+      <button class="btn btn--primary"><span class="icon-inline"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span> Rechercher</button>
+    </div>
+  </div>
+
+  <div class="card card--table">
+    <div class="card__header">
+      <h2 class="card__title">Sélection du client</h2>
+      <button *ngIf="selectedClient" (click)="clearClient()" class="btn btn--ghost">
+        Voir tous les clients
+      </button>
+    </div>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="table__col-sel">SÉL.</th>
+          <th>CLIENT</th>
+          <th>ID CLIENT</th>
+          <th>ADRESSE DOMICILE</th>
+          <th>NUMÉRO</th>
+          <th>EMAIL</th>
+          <th>NB QUITTANCES IMPAYÉES</th>
+          <th>MONTANT IMPAYÉ</th>
+          <th>DÉTAIL</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="filteredClientSummary.length === 0">
+          <td colspan="9" class="table__empty">
+            Aucun client ne correspond à ces critères de recherche.
+          </td>
+        </tr>
+
+        <tr *ngFor="let c of filteredClientSummary" [class.table__row--selected]="selectedClient === c.client">
+          <td>
+            <button
+              type="button"
+              role="radio"
+              [attr.aria-checked]="selectedClient === c.client"
+              (click)="toggleClient(c.client)"
+              class="radio"
+              [class.radio--active]="selectedClient === c.client"
+            >
+              <span *ngIf="selectedClient === c.client">✓</span>
+            </button>
+          </td>
+          <td class="table__strong">{{ c.client }}</td>
+          <td class="table__primary">{{ c.identifiant }}</td>
+          <td>{{ c.adresse }}</td>
+          <td>{{ c.tel }}</td>
+          <td>{{ c.email }}</td>
+          <td>{{ c.nb }}</td>
+          <td>{{ fmt(c.total) }} DT</td>
+          <td>
+            <button (click)="openDetail(c.client)" class="link"><span class="icon-inline"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"></path><circle cx="12" cy="12" r="3"></circle></svg></span> Voir</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<app-client-detail-modal
+  *ngIf="detailClient as dc"
+  [clientName]="dc"
+  [contact]="detailContact"
+  [summary]="detailSummary"
+  (close)="closeDetail()"
+></app-client-detail-modal>

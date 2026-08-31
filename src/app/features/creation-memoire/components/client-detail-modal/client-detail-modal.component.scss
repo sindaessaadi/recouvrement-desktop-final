@@ -1,0 +1,121 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.modal {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 420px;
+  overflow: hidden;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--star-border);
+  }
+
+  &__title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--star-text-dark);
+    margin: 0;
+  }
+
+  &__close {
+    background: none;
+    border: none;
+    font-size: 14px;
+    color: var(--star-text-lighter);
+    cursor: pointer;
+
+    &:hover {
+      color: var(--star-text-dark);
+    }
+  }
+
+  &__body {
+    padding: 20px;
+  }
+
+  &__footer {
+    padding: 16px 20px;
+    border-top: 1px solid var(--star-border);
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 12px;
+  column-gap: 16px;
+  margin-bottom: 16px;
+}
+
+.field {
+  &__label {
+    font-size: 9px;
+    color: var(--star-text-light);
+    margin-bottom: 2px;
+  }
+
+  &__value {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--star-text-dark);
+    word-break: break-all;
+  }
+}
+
+.summary {
+  background-color: var(--star-surface);
+  border: 1px solid var(--star-border);
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &__nb {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--star-text-dark);
+  }
+
+  &__right {
+    text-align: right;
+  }
+
+  &__total {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--star-primary);
+  }
+}
+
+.btn {
+  height: 32px;
+  padding: 0 16px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+
+  &--primary {
+    background-color: var(--star-primary);
+    color: white;
+  }
+}

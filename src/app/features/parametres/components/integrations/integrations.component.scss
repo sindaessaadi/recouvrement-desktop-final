@@ -1,0 +1,104 @@
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card {
+  background-color: white;
+  border: 1px solid var(--star-border);
+  border-radius: 8px;
+  padding: 20px;
+
+  &__title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--star-text-dark);
+    margin: 0;
+  }
+
+  &__description {
+    font-size: 10.5px;
+    color: var(--star-text-light);
+    margin: 4px 0 16px 0;
+  }
+}
+
+.row {
+  display: flex;
+  gap: 8px;
+
+  &__input {
+    flex: 1;
+    height: 32px;
+    padding: 0 12px;
+    border: 1px solid var(--star-border-dark);
+    border-radius: 6px;
+    font-size: 11px;
+    font-family: monospace;
+    color: var(--star-text-dark);
+    background-color: var(--star-surface);
+  }
+}
+
+.btn {
+  height: 32px;
+  padding: 0 14px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+
+  &--outline {
+    background-color: white;
+    border: 1px solid var(--star-border-dark);
+    color: var(--star-text-dark);
+  }
+}
+
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &__label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--star-text-dark);
+  }
+
+  &__sub {
+    font-size: 10px;
+    color: var(--star-text-light);
+    margin-top: 2px;
+  }
+}
+
+.toggle {
+  width: 36px;
+  height: 20px;
+  border-radius: 999px;
+  border: none;
+  background-color: var(--star-border-dark);
+  display: flex;
+  align-items: center;
+  padding: 2px;
+  cursor: pointer;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  transition: background-color 0.15s;
+
+  &--on {
+    background-color: var(--star-primary);
+    justify-content: flex-end;
+  }
+
+  &__dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: white;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  }
+}

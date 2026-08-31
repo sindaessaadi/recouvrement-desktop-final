@@ -1,0 +1,110 @@
+<div class="stack">
+  <!-- KPI globaux -->
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="kpi__label">Total clients</div>
+      <div class="kpi__value">{{ totalClients }}</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi__label">Arriere total</div>
+      <div class="kpi__value kpi__value--md">{{ arriereTotal }}</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi__label">Clients avec alertes</div>
+      <div class="kpi__value kpi__value--danger">{{ clientsAvecAlertes }}</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi__label">Taux moy. recouvrement</div>
+      <div class="kpi__value kpi__value--primary">{{ tauxMoyenRecouvrement }}%</div>
+    </div>
+  </div>
+
+  <!-- Filtres -->
+  <div class="card">
+    <h2 class="card__title">Recherche client</h2>
+    <div class="filters">
+      <div class="field field--grow">
+        <label>Nom / Raison sociale / Matricule</label>
+        <input type="text" [(ngModel)]="search" placeholder="Rechercher..." />
+      </div>
+      <div class="field">
+        <label>Branche</label>
+        <select [(ngModel)]="brancheFiltre">
+          <option [ngValue]="null">-- Toutes --</option>
+          <option *ngFor="let b of brancheOptions" [value]="b">{{ b }}</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Statut</label>
+        <select [(ngModel)]="statutFiltre">
+          <option [ngValue]="null">-- Tous --</option>
+          <option *ngFor="let s of statutOptions" [value]="s">{{ s }}</option>
+        </select>
+      </div>
+      <button class="btn btn--outline" (click)="reinitialiser()">&#8635; Reinitialiser</button>
+      <button class="btn btn--primary"><span class="icon-inline"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span> Rechercher</button>
+    </div>
+  </div>
+
+  <!-- Tableau -->
+  <div class="card card--table">
+    <div class="card__header">
+      <h2 class="card__title">Liste des clients ({{ filtres.length }})</h2>
+      <button class="btn btn--primary" (click)="onNouveauClient()">+ Nouveau client</button>
+    </div>
+
+    <div class="table-wrapper">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>CLIENT / RAISON SOCIALE</th>
+            <th>MATRICULE</th>
+            <th>TELEPHONE</th>
+            <th>BRANCHE</th>
+            <th>MONTANT IMPAYE</th>
+            <th>NB MEMOIRES</th>
+            <th>TAUX RECOUV.</th>
+            <th>STATUT</th>
+            <th>ALERTES</th>
+            <th>ACTIONS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="filtres.length === 0">
+            <td colspan="10" class="table__empty">Aucun client ne correspond a ces criteres.</td>
+          </tr>
+
+          <tr *ngFor="let c of filtres">
+            <td>
+              <div class="table__nom">{{ c.nom }}</div>
+              <div class="table__raison">{{ c.raisonSociale }}</div>
+            </td>
+            <td class="table__mono">{{ c.matricule ?? '-' }}</td>
+            <td>{{ c.telephone }}</td>
+            <td><span class="badge badge--info">{{ c.branche }}</span></td>
+            <td class="table__strong">{{ c.montantImpaye }}</td>
+            <td class="table__center">{{ c.nbMemoires }}</td>
+            <td>
+              <div class="taux">
+                <div class="taux__bar">
+                  <div class="taux__fill" [style.width.%]="c.tauxRecouvrement"></div>
+                </div>
+                <span>{{ c.tauxRecouvrement }}%</span>
+              </div>
+            </td>
+            <td><span [class]="classeStatut(c.statut)">{{ c.statut }}</span></td>
+            <td>
+              <span *ngIf="c.alertes > 0" class="alerte">&#9888;&#65039; {{ c.alertes }}</span>
+              <span *ngIf="c.alertes === 0" class="alerte alerte--ok">-</span>
+            </td>
+            <td>
+              <button class="link-btn" (click)="onVoir(c)"><span class="icon-inline"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"></path><circle cx="12" cy="12" r="3"></circle></svg></span> Voir</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card__footer">{{ filtres.length }} client(s) trouve(s)</div>
+  </div>
+</div>

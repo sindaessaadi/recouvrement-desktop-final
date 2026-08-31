@@ -1,0 +1,165 @@
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card {
+  background-color: white;
+  border: 1px solid var(--star-border);
+  border-radius: 8px;
+  padding: 20px;
+
+  &__title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--star-text-dark);
+    margin: 0;
+  }
+
+  &__description {
+    font-size: 10.5px;
+    color: var(--star-text-light);
+    margin: 4px 0 16px 0;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.field {
+  label {
+    display: block;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--star-text-gray);
+    margin-bottom: 4px;
+  }
+
+  input {
+    width: 100%;
+    height: 32px;
+    padding: 0 12px;
+    border: 1px solid var(--star-border-dark);
+    border-radius: 6px;
+    font-size: 11px;
+    outline: none;
+
+    &:focus {
+      border-color: var(--star-primary);
+    }
+  }
+}
+
+.message {
+  font-size: 11px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+
+  &--erreur {
+    background-color: #fee2e2;
+    color: #b91c1c;
+  }
+
+  &--succes {
+    background-color: var(--star-success-bg);
+    color: var(--star-success-text);
+  }
+}
+
+.btn {
+  height: 32px;
+  padding: 0 16px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+
+  &--primary {
+    background-color: var(--star-primary);
+    color: white;
+  }
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &__label {
+    font-size: 11px;
+    color: var(--star-text-dark);
+  }
+}
+
+.toggle {
+  width: 36px;
+  height: 20px;
+  border-radius: 999px;
+  border: none;
+  background-color: var(--star-border-dark);
+  display: flex;
+  align-items: center;
+  padding: 2px;
+  cursor: pointer;
+  justify-content: flex-start;
+  transition: background-color 0.15s;
+
+  &--on {
+    background-color: var(--star-primary);
+    justify-content: flex-end;
+  }
+
+  &__dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: white;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.session {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-top: 1px solid var(--star-border-light);
+  font-size: 11px;
+
+  &:first-of-type {
+    border-top: none;
+  }
+
+  &__appareil {
+    font-weight: 600;
+    color: var(--star-text-dark);
+  }
+
+  &__info {
+    font-size: 10px;
+    color: var(--star-text-light);
+    margin-top: 2px;
+  }
+
+  &__badge {
+    color: var(--star-primary);
+    font-size: 10px;
+    font-weight: 600;
+  }
+
+  &__deconnecter {
+    background: none;
+    border: none;
+    color: #dc2626;
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+}

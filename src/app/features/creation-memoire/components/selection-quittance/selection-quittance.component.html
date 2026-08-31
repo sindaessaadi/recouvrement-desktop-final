@@ -1,0 +1,126 @@
+<div class="stack">
+  <div class="card">
+    <h2 class="card__title">Filtres de recherche</h2>
+    <div class="filters">
+      <div class="field">
+        <label>Quittance</label>
+        <input type="text" [(ngModel)]="filterQuittance" placeholder="Ex. QTT-000123" />
+      </div>
+      <div class="field">
+        <label>Date emission</label>
+        <input type="text" [(ngModel)]="filterDateEmission" placeholder="jj/mm/aaaa" />
+      </div>
+      <div class="field">
+        <label>Date echeance</label>
+        <input type="text" [(ngModel)]="filterDateEcheance" placeholder="jj/mm/aaaa" />
+      </div>
+      <div class="field">
+        <label>Montant net</label>
+        <input type="text" [(ngModel)]="filterMontantNet" placeholder="Ex. 850000" />
+      </div>
+      <div class="field">
+        <label>Montant TTC</label>
+        <input type="text" [(ngModel)]="filterMontantTTC" placeholder="Ex. 15000" />
+      </div>
+      <div class="field">
+        <label>Statut</label>
+        <select [(ngModel)]="filterStatutPaiement">
+          <option value="">-- Tous --</option>
+          <option *ngFor="let s of statutPaiementOptions" [value]="s">{{ labelsStatutPaiement[s] }}</option>
+        </select>
+      </div>
+      <button class="btn btn--primary"><span class="icon-inline"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span> Rechercher</button>
+    </div>
+  </div>
+
+  <div class="card card--table">
+    <div class="card__header">
+      <h2 class="card__title">Quittances - {{ selectedClient }}</h2>
+      <span class="card__hint">Une seule quittance peut etre selectionnee</span>
+    </div>
+
+    <div class="table-wrapper" *ngIf="quittances.length > 0; else vide">
+      <table class="table" *ngIf="quittancesFiltrees.length > 0; else aucunResultat">
+        <thead>
+          <tr>
+            <th class="table__sel-col"></th>
+            <th>BRANCHE</th>
+            <th>CODE AGENCE</th>
+            <th>POLICE</th>
+            <th>QUITTANCE</th>
+            <th>DATE EMISSION</th>
+            <th>DATE ECHEANCE</th>
+            <th>MONTANT NET</th>
+            <th>FRAIS</th>
+            <th>TAXE</th>
+            <th>TOTAL TTC</th>
+            <th>STATUT</th>
+            <th>MEMOIRE</th>
+            <th>CONTRAT</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let q of quittancesFiltrees"
+            [class.table__row--selected]="q.checked"
+            [class.table__row--disabled]="!isEligible(q)"
+          >
+            <td>
+              <button
+                type="button"
+                class="checkbox"
+                [class.checkbox--checked]="q.checked"
+                [class.checkbox--disabled]="isDisabled(q)"
+                [disabled]="isDisabled(q)"
+                (click)="toggle(q.id)"
+                [title]="q.hasMemoire ? 'Un memoire existe deja pour cette quittance' : !isEligible(q) ? 'Statut non eligible' : ''"
+              >
+                <span *ngIf="q.checked">&#10003;</span>
+              </button>
+            </td>
+            <td>{{ q.branche }}</td>
+            <td class="table__strong">{{ q.agence }}</td>
+            <td class="table__link">{{ q.police }}</td>
+            <td class="table__link">{{ q.id }}</td>
+            <td>{{ q.emission }}</td>
+            <td class="table__link">{{ q.echeance }}</td>
+            <td class="table__strong">{{ format.fmt(q.montant) }} DT</td>
+            <td>{{ format.fmt(fiscalite.calcFrais(q.montant, q.branche)) }} DT</td>
+            <td>{{ format.fmt(fiscalite.calcTaxe(q.montant, q.branche)) }} DT</td>
+            <td class="table__link table__strong">{{ format.fmt(fiscalite.calcMontantDu(q.montant, q.branche)) }} DT</td>
+            <td>
+              <span class="badge" [ngClass]="'badge--' + q.statutPaiement">
+                {{ labelsStatutPaiement[q.statutPaiement] }}
+              </span>
+            </td>
+            <td>
+              <span *ngIf="q.hasMemoire" class="icon icon--success">&#10003;</span>
+              <span *ngIf="!q.hasMemoire" class="icon icon--danger">&#10007;</span>
+            </td>
+            <td>
+              <button class="link-btn" (click)="onVoirContrat(q.police)"><span class="icon-inline"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg></span> Voir</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <ng-template #aucunResultat>
+        <div class="table__empty">Aucune quittance ne correspond a ces criteres de recherche.</div>
+      </ng-template>
+    </div>
+
+    <ng-template #vide>
+      <div class="table__empty">Aucun client selectionne a l'etape precedente.</div>
+    </ng-template>
+
+    <div class="card__footer">
+      <span class="card__footer-count">
+        {{ selectionnee ? 1 : 0 }} quittance selectionnee
+      </span>
+      <div class="card__footer-total">
+        <div class="card__footer-total-label">Total TTC</div>
+        <div class="card__footer-total-value">{{ format.fmt(totalTTCSelection) }} DT</div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,68 @@
+<div class="stack">
+  <!-- Mot de passe -->
+  <div class="card">
+    <h2 class="card__title">Mot de passe</h2>
+    <p class="card__description">
+      Modifiez votre mot de passe regulierement pour securiser votre compte.
+    </p>
+
+    <div class="grid">
+      <div class="field">
+        <label>Mot de passe actuel</label>
+        <input type="password" [(ngModel)]="ancienMotDePasse" placeholder="********" />
+      </div>
+      <div></div>
+      <div class="field">
+        <label>Nouveau mot de passe</label>
+        <input type="password" [(ngModel)]="nouveauMotDePasse" placeholder="********" />
+      </div>
+      <div class="field">
+        <label>Confirmer le nouveau mot de passe</label>
+        <input type="password" [(ngModel)]="confirmationMotDePasse" placeholder="********" />
+      </div>
+    </div>
+
+    <div class="message message--erreur" *ngIf="messageErreur">{{ messageErreur }}</div>
+    <div class="message message--succes" *ngIf="messageSucces">{{ messageSucces }}</div>
+
+    <button class="btn btn--primary" (click)="onValider()">
+      Mettre a jour le mot de passe
+    </button>
+  </div>
+
+  <!-- 2FA -->
+  <div class="card">
+    <h2 class="card__title">Authentification a deux facteurs (2FA)</h2>
+    <p class="card__description">
+      Ajoute une couche de securite supplementaire lors de la connexion.
+    </p>
+
+    <div class="row">
+      <div class="row__label">
+        {{ twoFA ? 'Activee - via application mobile' : 'Desactivee' }}
+      </div>
+      <button class="toggle" [class.toggle--on]="twoFA" (click)="twoFA = !twoFA">
+        <span class="toggle__dot"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Sessions actives -->
+  <div class="card">
+    <h2 class="card__title">Sessions actives</h2>
+    <p class="card__description">Appareils actuellement connectes a votre compte.</p>
+
+    <div class="session" *ngFor="let s of sessions">
+      <div>
+        <div class="session__appareil">{{ s.appareil }} - {{ s.localisation }}</div>
+        <div class="session__info">
+          {{ s.statut === 'active' ? 'Session actuelle - ' : 'Derniere activite : ' }}{{ s.derniereActivite }}
+        </div>
+      </div>
+      <span *ngIf="s.statut === 'active'" class="session__badge">En cours</span>
+      <button *ngIf="s.statut !== 'active'" class="session__deconnecter" (click)="onDeconnecter(s)">
+        Deconnecter
+      </button>
+    </div>
+  </div>
+</div>

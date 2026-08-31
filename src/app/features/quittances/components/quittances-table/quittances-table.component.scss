@@ -1,0 +1,135 @@
+.table-wrapper {
+  background-color: white;
+  border: 1px solid var(--star-border);
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+
+  thead tr {
+    background-color: var(--star-surface);
+    border-bottom: 1px solid var(--star-border-light);
+  }
+
+  th {
+    padding: 8px 16px;
+    font-size: 9px;
+    font-weight: 600;
+    color: var(--star-text-light);
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 12px 16px;
+    font-size: 11px;
+    color: var(--star-text-dark);
+    border-bottom: 1px solid var(--star-border-light);
+  }
+
+  tbody tr:hover {
+    background-color: #f9fafb;
+  }
+
+  &__row--selected {
+    background-color: #e6f4ea !important;
+  }
+
+  &__client {
+    color: var(--star-primary);
+    font-weight: 600;
+  }
+
+  &__link {
+    color: var(--star-primary);
+  }
+
+  &__strong {
+    font-weight: 600;
+  }
+
+  &__empty {
+    text-align: center;
+    padding: 32px;
+    color: var(--star-text-light);
+  }
+}
+
+.radio {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid var(--star-border-dark);
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 10px;
+  color: white;
+
+  &--checked {
+    background-color: var(--star-primary);
+    border-color: var(--star-primary);
+  }
+}
+
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 9px;
+  font-weight: 600;
+
+  &--danger {
+    background-color: #fee2e2;
+    color: #b91c1c;
+  }
+
+  &--success {
+    background-color: var(--star-success-bg);
+    color: var(--star-success-text);
+  }
+
+  &--warning {
+    background-color: var(--star-yellow-bg);
+    color: var(--star-yellow-text);
+  }
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-size: 11px;
+
+  &--success {
+    background-color: var(--star-success-bg);
+    color: var(--star-success-text);
+  }
+
+  &--danger {
+    background-color: #fee2e2;
+    color: #dc2626;
+  }
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  color: var(--star-primary);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

@@ -1,0 +1,156 @@
+<div class="stack">
+  <!-- KPI -->
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div>
+        <div class="kpi__label">Memoires generes</div>
+        <div class="kpi__value">{{ kpis?.memoiresGeneres ?? 0 }}</div>
+        <div class="kpi__sub">Ce mois</div>
+      </div>
+      <div class="kpi__icon kpi__icon--primary">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <path d="M14 2v6h6"></path>
+          <line x1="8" y1="13" x2="16" y2="13"></line>
+          <line x1="8" y1="17" x2="16" y2="17"></line>
+        </svg>
+      </div>
+    </div>
+
+    <div class="kpi">
+      <div>
+        <div class="kpi__label">Creances echues</div>
+        <div class="kpi__value">{{ kpis?.creancesEchues ?? '0 DT' }}</div>
+        <div class="kpi__sub">Ce mois</div>
+      </div>
+      <div class="kpi__icon kpi__icon--orange">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"></path>
+          <line x1="12" y1="9" x2="12" y2="13"></line>
+          <line x1="12" y1="17" x2="12.01" y2="17"></line>
+        </svg>
+      </div>
+    </div>
+
+    <div class="kpi">
+      <div>
+        <div class="kpi__label">Encaissements ce mois</div>
+        <div class="kpi__value">{{ kpis?.encaissements ?? '0 DT' }}</div>
+        <div class="kpi__sub">Ce mois</div>
+      </div>
+      <div class="kpi__icon kpi__icon--primary">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+          <polyline points="17 6 23 6 23 12"></polyline>
+        </svg>
+      </div>
+    </div>
+
+    <div class="kpi">
+      <div>
+        <div class="kpi__label">Taux de recouvrement</div>
+        <div class="kpi__value">{{ kpis?.taux ?? 0 }} %</div>
+        <div class="kpi__sub">Ce mois</div>
+      </div>
+      <div class="kpi__icon kpi__icon--blue">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Graphiques -->
+  <div class="charts-grid">
+    <div class="card card--chart">
+      <h2 class="card__title">Montant en attente par anciennete</h2>
+      <div class="donut-row">
+        <div class="donut-wrapper">
+          <canvas baseChart [data]="donutData" [options]="donutOptions" type="doughnut"></canvas>
+          <div class="donut-center">
+            <span class="donut-center__value">100%</span>
+            <span class="donut-center__label">arriere</span>
+          </div>
+        </div>
+        <div class="legend">
+          <div class="legend__item" *ngFor="let a of anciennete">
+            <div class="legend__dot" [style.background-color]="a.couleur"></div>
+            <div>
+              <div class="legend__label">{{ a.label }}</div>
+              <div class="legend__value">{{ a.valeur }}%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card--chart">
+      <div class="card__header-row">
+        <h2 class="card__title">Evolution des montants (DT)</h2>
+        <div class="legend-inline">
+          <div class="legend-inline__item">
+            <div class="legend-inline__dot" style="background-color:#F39C12"></div>
+            <span>En attente</span>
+          </div>
+          <div class="legend-inline__item">
+            <div class="legend-inline__dot" style="background-color:#1E7A4E"></div>
+            <span>Recupere</span>
+          </div>
+        </div>
+      </div>
+      <div class="bar-wrapper">
+        <canvas baseChart [data]="barData" [options]="barOptions" type="bar"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Derniers memoires + Statut -->
+  <div class="bottom-grid">
+    <div class="card">
+      <div class="card__header-row">
+        <h2 class="card__title">Derniers memoires</h2>
+        <a routerLink="/memoires" class="voir-tout-link">Voir tout</a>
+      </div>
+      <div class="table-wrapper">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>N&#176; MEMOIRE</th>
+              <th>DATE</th>
+              <th>MONTANT</th>
+              <th>STATUT</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let m of memoiresRecents">
+              <td>
+                <a [routerLink]="['/memoire', m.id]" class="table__link">{{ m.id }}</a>
+                <div class="table__client">{{ m.client }}</div>
+              </td>
+              <td>{{ m.date }}</td>
+              <td>{{ m.montant }}</td>
+              <td><span class="badge" [ngClass]="classeStatut(m.statut)">{{ labelsStatut[m.statut] }}</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 class="card__title">Statut des memoires</h2>
+      <div class="statut-row">
+        <div class="statut-total">
+          <span class="statut-total__value">{{ totalMemoiresStatut }}</span>
+          <span class="statut-total__label">total</span>
+        </div>
+        <div class="statut-list">
+          <div class="statut-list__item" *ngFor="let s of repartitionStatut">
+            <span class="statut-list__label">{{ s.label }}</span>
+            <span class="statut-list__value">{{ s.valeur }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

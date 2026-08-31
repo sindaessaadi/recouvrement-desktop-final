@@ -1,0 +1,103 @@
+<div class="stack">
+  <!-- Filtres -->
+  <div class="card">
+    <h2 class="card__title">Filtrage</h2>
+    <div class="filters">
+      <div class="field">
+        <label>Client</label>
+        <input type="text" [(ngModel)]="filtreClient" placeholder="Taper le nom ou le prenom" />
+      </div>
+      <div class="field">
+        <label>N&#176; memoire</label>
+        <input type="text" [(ngModel)]="filtreNumero" placeholder="Ex. MEM-2026-0015" />
+      </div>
+      <div class="field">
+        <label>Branche</label>
+        <select [(ngModel)]="filtreBranche">
+          <option [ngValue]="null">-- Toutes --</option>
+          <option *ngFor="let b of brancheOptions" [value]="b">{{ b }}</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Memoire</label>
+        <select [(ngModel)]="filtreMemoire">
+          <option [ngValue]="null">-- Toutes --</option>
+          <option *ngFor="let m of memoireFilterOptions" [value]="m">{{ m }}</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Du</label>
+        <input type="date" [(ngModel)]="filtreDateDu" />
+      </div>
+      <div class="field">
+        <label>Au</label>
+        <input type="date" [(ngModel)]="filtreDateAu" [min]="filtreDateDu" />
+      </div>
+      <button class="btn btn--primary"><span class="icon-inline"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span> Rechercher</button>
+    </div>
+  </div>
+
+  <!-- Onglets -->
+  <div class="tabs">
+    <button
+      *ngFor="let o of onglets"
+      class="tabs__item"
+      [class.tabs__item--active]="ongletActif === o"
+      (click)="selectionnerOnglet(o)"
+    >
+      {{ o }}
+    </button>
+  </div>
+
+  <!-- Tableau -->
+  <div class="card card--table">
+    <div class="card__header">
+      <span class="card__count">{{ memoiresFiltres.length }} mémoire(s)</span>
+      <button class="btn btn--outline" (click)="onExporter()">&#11015; Exporter Excel</button>
+    </div>
+
+    <div class="table-wrapper">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>N&#176; MEMOIRE</th>
+            <th>BRANCHE</th>
+            <th>CLIENT</th>
+            <th>DATE D'ECHEANCE</th>
+            <th>MONTANT NET</th>
+            <th>STATUT</th>
+            <th>ACTIONS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="memoiresFiltres.length === 0">
+            <td colspan="7" class="table__empty">Aucun memoire ne correspond a ces filtres.</td>
+          </tr>
+
+          <tr *ngFor="let m of memoiresFiltres">
+            <td>
+              <a [routerLink]="['/memoire', m.id]" class="table__link">{{ m.id }}</a>
+            </td>
+            <td>{{ m.branche }}</td>
+            <td>{{ m.client }}</td>
+            <td>{{ m.dateLimitePaiement }}</td>
+            <td>{{ m.montantNet }} DT</td>
+            <td>
+              <span [class]="classeStatut(m.statut)">{{ labelsStatut[m.statut] }}</span>
+            </td>
+            <td>
+              <div class="actions">
+                <a [routerLink]="['/memoire', m.id]" title="Voir le detail" class="icon-btn"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"></path><circle cx="12" cy="12" r="3"></circle></svg></a>
+                <button (click)="onModifier(m)" title="Modifier" class="icon-btn">&#9999;</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card__footer">
+      Affichage {{ memoiresFiltres.length ? 1 : 0 }}-{{ memoiresFiltres.length }} sur {{ memoiresFiltres.length }} mémoire{{ memoiresFiltres.length > 1 ? 's' : '' }}
+    </div>
+  </div>
+</div>

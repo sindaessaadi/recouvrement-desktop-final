@@ -1,0 +1,259 @@
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card {
+  background-color: white;
+  border: 1px solid var(--star-border);
+  border-radius: 8px;
+  padding: 20px;
+
+  &--table {
+    padding: 0;
+  }
+
+  &__title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--star-text-dark);
+    margin: 0;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--star-border);
+  }
+
+  &__hint {
+    font-size: 10px;
+    color: var(--star-text-light);
+  }
+
+  &__footer {
+    background-color: var(--star-surface);
+    padding: 16px 20px;
+    border-top: 1px solid var(--star-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__footer-count {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--star-text-gray);
+  }
+
+  &__footer-total {
+    text-align: right;
+
+    &-label {
+      font-size: 9px;
+      color: var(--star-text-light);
+    }
+
+    &-value {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--star-primary);
+    }
+  }
+}
+
+.filters {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.field {
+  flex: 1;
+  min-width: 120px;
+
+  label {
+    display: block;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--star-text-gray);
+    margin-bottom: 4px;
+  }
+
+  input,
+  select {
+    width: 100%;
+    height: 32px;
+    padding: 0 10px;
+    border: 1px solid var(--star-border-dark);
+    border-radius: 6px;
+    font-size: 11px;
+  }
+}
+
+.btn {
+  height: 32px;
+  padding: 0 16px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  border: none;
+
+  &--primary {
+    background-color: var(--star-primary);
+    color: white;
+  }
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+
+  thead tr {
+    background-color: var(--star-surface);
+    border-bottom: 1px solid var(--star-border-light);
+  }
+
+  th {
+    padding: 8px 12px;
+    font-size: 9px;
+    font-weight: 600;
+    color: var(--star-text-light);
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 10px 12px;
+    font-size: 11px;
+    color: var(--star-text-dark);
+    border-bottom: 1px solid var(--star-border-light);
+    white-space: nowrap;
+  }
+
+  &__sel-col {
+    width: 36px;
+  }
+
+  &__row--selected {
+    background-color: var(--star-success-bg) !important;
+  }
+
+  &__row--disabled {
+    opacity: 0.5;
+  }
+
+  &__strong {
+    font-weight: 600;
+  }
+
+  &__link {
+    color: var(--star-primary);
+  }
+
+  &__empty {
+    text-align: center;
+    padding: 32px;
+    color: var(--star-text-light);
+    font-size: 11px;
+  }
+}
+
+.checkbox {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 1px solid var(--star-border-dark);
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 10px;
+  color: white;
+
+  &--checked {
+    background-color: var(--star-primary);
+    border-color: var(--star-primary);
+  }
+
+  &--disabled {
+    background-color: var(--star-border-light);
+    border-color: var(--star-border-light);
+    cursor: not-allowed;
+  }
+}
+
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 9px;
+  font-weight: 600;
+  white-space: nowrap;
+
+  &--Planifie {
+    background-color: #dbeafe;
+    color: #1d4ed8;
+  }
+  &--En_cours {
+    background-color: var(--star-yellow-bg);
+    color: var(--star-yellow-text);
+  }
+  &--Depose {
+    background-color: #f3e8ff;
+    color: #7e22ce;
+  }
+  &--Paiement_partiel {
+    background-color: #ffedd5;
+    color: #c2410c;
+  }
+  &--Regle {
+    background-color: var(--star-success-bg);
+    color: var(--star-success-text);
+  }
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-size: 11px;
+
+  &--success {
+    background-color: var(--star-success-bg);
+    color: var(--star-success-text);
+  }
+
+  &--danger {
+    background-color: #fee2e2;
+    color: #dc2626;
+  }
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  color: var(--star-primary);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

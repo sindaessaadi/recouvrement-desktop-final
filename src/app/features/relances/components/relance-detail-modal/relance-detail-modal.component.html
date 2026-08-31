@@ -1,0 +1,34 @@
+<div class="overlay" (click)="onClose()">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <div class="modal__header">
+      <h3 class="modal__title">Detail de la relance - {{ relance.memoire }}</h3>
+      <button class="modal__close" (click)="onClose()">&#10005;</button>
+    </div>
+
+    <div class="modal__body">
+      <div class="type-row">
+        <span class="type-row__label">Type</span>
+        <span class="badge" [ngClass]="classeType">{{ labelsType[relance.type] }}</span>
+      </div>
+
+      <div class="info-box">
+        <div class="info-box__title">Informations generales</div>
+        <div class="grid">
+          <div class="field" *ngFor="let item of infos">
+            <div class="field__label">{{ item[0] }}</div>
+            <div class="field__value">{{ item[1] }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-title">Detail de l'action</div>
+        <div class="message-box">{{ relance.message }}</div>
+      </div>
+    </div>
+
+    <div class="modal__footer">
+      <button class="btn btn--primary" (click)="onClose()">Fermer</button>
+    </div>
+  </div>
+</div>

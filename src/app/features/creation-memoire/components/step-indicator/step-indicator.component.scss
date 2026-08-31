@@ -1,0 +1,53 @@
+.indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 32px;
+
+  &__step {
+    display: flex;
+    align-items: center;
+  }
+
+  &__circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    background-color: var(--star-border);
+    color: var(--star-text-lighter);
+    flex-shrink: 0;
+
+    &--active {
+      background-color: var(--star-primary);
+      color: white;
+    }
+  }
+
+  &__label {
+    margin-left: 8px;
+    font-size: 10px;
+    font-weight: 500;
+    white-space: nowrap;
+    color: var(--star-text-lighter);
+
+    &--active {
+      color: var(--star-primary);
+    }
+  }
+
+  &__line {
+    width: 64px;
+    height: 2px;
+    margin: 0 12px;
+    background-color: var(--star-border);
+
+    &--active {
+      background-color: var(--star-primary);
+    }
+  }
+}

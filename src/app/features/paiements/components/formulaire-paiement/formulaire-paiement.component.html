@@ -1,0 +1,97 @@
+<div class="overlay">
+  <div class="modal">
+    <div class="modal__header">
+      <h3 class="modal__title">Enregistrer un paiement</h3>
+      <button class="modal__close" (click)="onClose()">&times;</button>
+    </div>
+
+    <div class="modal__body">
+      <div class="grid-2">
+        <div class="field">
+          <label>N° Memoire</label>
+          <select [(ngModel)]="memoire">
+            <option *ngFor="let m of memoiresOptions" [value]="m">{{ m }}</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Client</label>
+          <input disabled [value]="client" />
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="field">
+          <label>Montant recu</label>
+          <div class="montant-input">
+            <input type="number" [(ngModel)]="montant" (ngModelChange)="onMontantChange()" placeholder="0" />
+            <select [(ngModel)]="devise">
+              <option *ngFor="let d of devises" [value]="d">{{ d }}</option>
+            </select>
+          </div>
+          <div *ngIf="error" class="error-text">{{ error }}</div>
+        </div>
+        <div class="field">
+          <label>Date de reception</label>
+          <input type="date" [(ngModel)]="dateReception" />
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="field">
+          <label>Mode de paiement</label>
+          <select [(ngModel)]="mode">
+            <option *ngFor="let m of modes" [value]="m">{{ m }}</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Type d'encaissement</label>
+          <select [(ngModel)]="type">
+            <option *ngFor="let t of types" [value]="t">{{ t }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div *ngIf="type === 'Tranche'" class="tranche-box">
+        <div class="tranche-box__title">Detail tranche</div>
+        <div class="grid-2">
+          <div class="field">
+            <label>N° tranche</label>
+            <input type="number" [(ngModel)]="tranche" placeholder="1" />
+          </div>
+          <div class="field">
+            <label>Date d'echeance</label>
+            <input type="date" [(ngModel)]="echeanceTranche" />
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Reference / Commentaire</label>
+        <input type="text" [(ngModel)]="reference" placeholder="ex. Virement ref. VIR-2026-0123" />
+      </div>
+
+      <div class="recap-box">
+        <div class="recap-box__title">Recapitulatif memoire selectionne</div>
+        <div class="recap-box__grid">
+          <div>
+            <div class="recap-box__label">Montant du</div>
+            <div class="recap-box__value">2 450 DT</div>
+          </div>
+          <div>
+            <div class="recap-box__label">Deja encaisse</div>
+            <div class="recap-box__value recap-box__value--success">800 DT</div>
+          </div>
+          <div>
+            <div class="recap-box__label">Reste a payer</div>
+            <div class="recap-box__value recap-box__value--danger">1 650 DT</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal__footer">
+      <button class="btn btn--outline" (click)="onClose()">Annuler</button>
+      <button class="btn btn--primary" (click)="handleSubmit()">&#10003; Enregistrer</button>
+    </div>
+  </div>
+</div>

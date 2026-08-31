@@ -1,0 +1,54 @@
+<div class="card">
+  <h2 class="card__title">4. Choix du mode de reglement</h2>
+
+  <div class="modes">
+    <button
+      *ngFor="let m of modes"
+      class="mode-card"
+      [class.mode-card--active]="selectedMode === m.id"
+      (click)="selectionner(m.id)"
+    >
+      <div class="mode-card__icon">{{ m.icon }}</div>
+      <div class="mode-card__label" [class.mode-card__label--active]="selectedMode === m.id">{{ m.label }}</div>
+      <div class="mode-card__desc">{{ m.desc }}</div>
+    </button>
+  </div>
+
+  <div class="chosen" *ngIf="selectedMode">
+    <div class="chosen__label">Mode choisi : {{ modeLabel }}</div>
+
+    <app-mode-paiement-total
+      *ngIf="selectedMode === 'total'"
+      [total]="total"
+      [devise]="devise"
+      (echeancierChange)="onEcheancierChange($event)"
+      (commentaireChange)="onCommentaireChange($event)"
+      (validChange)="onValidChange($event)"
+    ></app-mode-paiement-total>
+
+    <app-mode-par-pourcentage
+      *ngIf="selectedMode === 'pct'"
+      [principal]="principal"
+      [frais]="frais"
+      [taxe]="taxe"
+      [devise]="devise"
+      (echeancierChange)="onEcheancierChange($event)"
+      (validChange)="onValidChange($event)"
+    ></app-mode-par-pourcentage>
+
+    <app-mode-par-tranche
+      *ngIf="selectedMode === 'tranche'"
+      [principal]="principal"
+      [frais]="frais"
+      [taxe]="taxe"
+      [devise]="devise"
+      (echeancierChange)="onEcheancierChange($event)"
+      (validChange)="onValidChange($event)"
+    ></app-mode-par-tranche>
+  </div>
+
+  <div class="total-bar">
+    <span class="total-bar__label">Montant total a regler</span>
+    <span class="total-bar__value">{{ format.fmt(total) }} {{ devise }}</span>
+  </div>
+</div>

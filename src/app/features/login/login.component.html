@@ -1,0 +1,36 @@
+<div class="login-page">
+  <div class="login-card">
+    <img src="logo-star.svg" alt="STAR Assurances" class="login-card__logo" />
+    <h1 class="login-card__title">Recouvrement</h1>
+    <p class="login-card__subtitle">Connectez-vous a votre compte</p>
+
+    <form (ngSubmit)="onSubmit()">
+      <div class="field">
+        <label>Email</label>
+        <input
+          type="email"
+          [(ngModel)]="email"
+          name="email"
+          placeholder="prenom.nom@star.tn"
+          autocomplete="username"
+        />
+      </div>
+      <div class="field">
+        <label>Mot de passe</label>
+        <input
+          type="password"
+          [(ngModel)]="motDePasse"
+          name="motDePasse"
+          placeholder="••••••••"
+          autocomplete="current-password"
+        />
+      </div>
+
+      <div class="login-card__erreur" *ngIf="erreur">{{ erreur }}</div>
+
+      <button type="submit" class="btn btn--primary" [disabled]="enCours">
+        {{ enCours ? 'Connexion...' : 'Se connecter' }}
+      </button>
+    </form>
+  </div>
+</div>

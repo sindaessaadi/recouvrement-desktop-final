@@ -1,0 +1,146 @@
+.error-text {
+  font-size: 11px;
+  color: #dc2626;
+  margin-top: 4px;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.modal {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 420px;
+  overflow: hidden;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--star-border);
+  }
+
+  &__title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--star-text-dark);
+    margin: 0;
+  }
+
+  &__close {
+    background: none;
+    border: none;
+    font-size: 14px;
+    color: var(--star-text-lighter);
+    cursor: pointer;
+
+    &:hover {
+      color: var(--star-text-dark);
+    }
+  }
+
+  &__body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &__footer {
+    padding: 16px 20px;
+    border-top: 1px solid var(--star-border);
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+  }
+}
+
+.field {
+  label {
+    display: block;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--star-text-gray);
+    margin-bottom: 4px;
+  }
+
+  select,
+  input,
+  textarea {
+    width: 100%;
+    padding: 0 12px;
+    height: 36px;
+    border: 1px solid var(--star-border-dark);
+    border-radius: 6px;
+    font-size: 11px;
+  }
+
+  textarea {
+    height: auto;
+    padding: 8px 12px;
+    resize: none;
+  }
+
+  &__readonly {
+    background-color: var(--star-surface);
+    color: var(--star-text-light);
+  }
+}
+
+.canal-row {
+  display: flex;
+  gap: 8px;
+}
+
+.canal-btn {
+  flex: 1;
+  height: 36px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid var(--star-border-dark);
+  background-color: white;
+  color: var(--star-text-dark);
+
+  &--active {
+    background-color: var(--star-primary);
+    border-color: var(--star-primary);
+    color: white;
+  }
+}
+
+.btn {
+  height: 36px;
+  padding: 0 16px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+
+  &--primary {
+    background-color: var(--star-primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  &--outline {
+    background-color: white;
+    border: 1px solid var(--star-border-dark);
+    color: var(--star-text-dark);
+  }
+}

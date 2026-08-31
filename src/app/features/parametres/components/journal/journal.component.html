@@ -1,0 +1,14 @@
+<div class="card">
+  <h2 class="card__title">Journal d'activite</h2>
+  <p class="card__description">
+    Historique des actions effectuees dans l'application.
+  </p>
+
+  <div class="log" *ngFor="let log of logs">
+    <div>
+      <div class="log__action">{{ log.action }}</div>
+      <div class="log__user">{{ log.utilisateur }}</div>
+    </div>
+    <div class="log__date">{{ log.date }}</div>
+  </div>
+</div>

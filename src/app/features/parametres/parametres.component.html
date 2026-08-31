@@ -1,0 +1,53 @@
+<div class="page">
+  <app-parametres-nav
+    [ongletActif]="ongletActif"
+    (ongletChange)="onOngletChange($event)"
+  ></app-parametres-nav>
+
+  <div class="page__content">
+    <app-profil *ngIf="ongletActif === 'profil'" [utilisateur]="utilisateur"></app-profil>
+
+    <app-securite
+      *ngIf="ongletActif === 'securite'"
+      [sessions]="sessions"
+      (changerMotDePasse)="onChangerMotDePasse($event)"
+      (deconnecterSession)="onDeconnecterSession($event)"
+    ></app-securite>
+
+    <app-notifications
+      *ngIf="ongletActif === 'notifications'"
+      [preferences]="preferences"
+      (enregistrer)="onEnregistrer()"
+    ></app-notifications>
+
+    <app-affichage
+      *ngIf="ongletActif === 'affichage'"
+      [preferences]="preferences"
+      (enregistrer)="onEnregistrer()"
+    ></app-affichage>
+
+    <app-utilisateurs
+      *ngIf="ongletActif === 'utilisateurs'"
+      [utilisateurs]="utilisateurs"
+      (ajouter)="onAjouterUtilisateur()"
+      (supprimer)="onSupprimerUtilisateur($event)"
+    ></app-utilisateurs>
+
+    <app-organisation
+      *ngIf="ongletActif === 'organisation'"
+      [organisation]="organisation"
+      (enregistrer)="onEnregistrer()"
+    ></app-organisation>
+
+    <app-integrations *ngIf="ongletActif === 'integrations'"></app-integrations>
+
+    <app-journal *ngIf="ongletActif === 'journal'" [logs]="logs"></app-journal>
+
+    <div class="save-bar">
+      <span class="save-bar__confirmation" *ngIf="saved">&#10003; Modifications enregistrees</span>
+      <button class="btn btn--primary" (click)="onEnregistrer()">
+        Enregistrer les modifications
+      </button>
+    </div>
+  </div>
+</div>

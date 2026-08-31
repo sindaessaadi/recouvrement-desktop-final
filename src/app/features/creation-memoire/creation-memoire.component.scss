@@ -1,0 +1,36 @@
+.wizard-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 24px;
+}
+
+.btn {
+  height: 36px;
+  padding: 0 16px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+
+  &--primary {
+    background: var(--star-primary);
+    color: white;
+  }
+
+  &--ghost {
+    background: white;
+    border: 1px solid var(--star-border-dark);
+    color: var(--star-text-dark);
+  }
+
+  &--disabled {
+    background: var(--star-border);
+    color: var(--star-text-lighter);
+    cursor: not-allowed;
+  }
+}
+
+.summary-bar-wrapper {
+  margin-bottom: 20px;
+}

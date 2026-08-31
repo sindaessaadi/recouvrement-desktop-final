@@ -1,0 +1,37 @@
+<div class="card">
+  <h2 class="card__title">Statut du memoire</h2>
+
+  <div class="timeline">
+    <div class="timeline__step" *ngFor="let etape of etapes; let i = index">
+      <div class="timeline__marker">
+        <div
+          class="timeline__circle"
+          [class.timeline__circle--fait]="estFait(i)"
+          [class.timeline__circle--actuel]="estActuel(i)"
+        >
+          <span *ngIf="estFait(i)">&#10003;</span>
+          <span *ngIf="!estFait(i)">{{ i + 1 }}</span>
+        </div>
+        <div
+          *ngIf="!estDernier(i)"
+          class="timeline__line"
+          [class.timeline__line--fait]="estFait(i)"
+        ></div>
+      </div>
+
+      <div class="timeline__content" [class.timeline__content--dernier]="estDernier(i)">
+  <div
+    class="timeline__label"
+    [class.timeline__label--actuel]="estActuel(i)"
+    [class.timeline__label--fait]="estFait(i)"
+  >
+    {{ etape.label }}
+  </div>
+  <div class="timeline__badge" *ngIf="estActuel(i)">Etape actuelle</div>
+  <div class="timeline__commentaire" *ngIf="commentairePourEtape(etape.key) as commentaire">
+    {{ commentaire }}
+  </div>
+</div>
+    </div>
+  </div>
+</div>

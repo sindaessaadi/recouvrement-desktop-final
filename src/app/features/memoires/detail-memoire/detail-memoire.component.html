@@ -1,0 +1,165 @@
+<div *ngIf="chargementTermine && !memoire" class="not-found">
+  <div class="not-found__icon">&#9888;&#65039;</div>
+  <h2 class="not-found__title">Memoire introuvable</h2>
+  <p class="not-found__desc">Aucun memoire ne correspond a l'identifiant &laquo; {{ id }} &raquo;.</p>
+  <button class="btn btn--primary" (click)="onRetourListe()">
+    &#8592; Retour a la liste des memoires
+  </button>
+</div>
+
+<div *ngIf="memoire" class="stack">
+  <div class="top-bar">
+    <a routerLink="/memoires" class="back-link">&#8592; Retour aux memoires</a>
+    <div class="top-bar__actions">
+      <button class="btn btn--outline" (click)="onTelecharger()">&#11015; Telecharger PDF</button>
+      <button class="btn btn--primary" (click)="onImprimer()"><span class="icon-inline"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg></span> Imprimer</button>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="col col--main">
+      <div class="card">
+        <div class="card__header">
+          <div>
+            <div class="card__eyebrow">MEMOIRE DE REGLEMENT</div>
+            <h1 class="card__id">{{ memoire.id }}</h1>
+          </div>
+          <span [class]="classeStatut(memoire.statut)">{{ labelsStatut[memoire.statut] }}</span>
+        </div>
+
+        <div class="info-box">
+          <div class="info-box__col">
+            <div class="info-box__title">CLIENT</div>
+            <div class="info-row">
+              <div class="info-row__label">Nom</div>
+              <div class="info-row__value info-row__value--strong">{{ memoire.client }}</div>
+            </div>
+            <div class="info-row">
+              <div class="info-row__label">Adresse</div>
+              <div class="info-row__value">{{ memoire.adresseClient }}</div>
+            </div>
+            <div class="info-row">
+              <div class="info-row__label">Telephone</div>
+              <div class="info-row__value">{{ memoire.telephoneClient }}</div>
+            </div>
+          </div>
+          <div class="info-box__col">
+            <div class="info-box__title">POLICE</div>
+            <div class="info-row">
+              <div class="info-row__label">N&#176; police</div>
+              <div class="info-row__value info-row__value--strong">{{ memoire.policeNumero }}</div>
+            </div>
+            <div class="info-row">
+              <div class="info-row__label">Branche</div>
+              <div class="info-row__value">{{ memoire.branche }}</div>
+            </div>
+            <div class="info-row">
+              <div class="info-row__label">Agent</div>
+              <div class="info-row__value">{{ memoire.agent }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+  <div class="section__title">DATES DE LA QUITTANCE D'ORIGINE</div>
+  <div class="section__grid section__grid--2">
+    <div>
+      <div class="info-row__label">Date d'emission</div>
+      <div class="info-row__value info-row__value--strong">{{ memoire.dateEmissionQuittance }}</div>
+    </div>
+    <div class="section__col-bordered">
+      <div class="info-row__label">Date d'echeance</div>
+      <div class="info-row__value info-row__value--strong">{{ memoire.dateEcheanceQuittance }}</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section__title">DATES DU MEMOIRE</div>
+  <div class="section__grid section__grid--2">
+    <div>
+      <div class="info-row__label">Date de creation</div>
+      <div class="info-row__value info-row__value--strong">{{ memoire.dateCreation }}</div>
+    </div>
+    <div class="section__col-bordered">
+      <div class="info-row__label">Date limite de paiement</div>
+      <div class="info-row__value info-row__value--strong">{{ memoire.dateLimitePaiement }}</div>
+    </div>
+  </div>
+</div>
+
+        <div class="section">
+          <div class="section__title">DETAIL DU MONTANT</div>
+          <div class="section__grid section__grid--4">
+            <div>
+              <div class="info-row__label">Montant net</div>
+              <div class="info-row__value info-row__value--strong">{{ memoire.montantNet }} DT</div>
+            </div>
+            <div>
+              <div class="info-row__label">Frais</div>
+              <div class="info-row__value info-row__value--strong">{{ memoire.frais }} DT</div>
+            </div>
+            <div>
+              <div class="info-row__label">Taxe</div>
+              <div class="info-row__value info-row__value--strong">{{ memoire.taxe }} DT</div>
+            </div>
+            <div class="section__col-bordered">
+              <div class="info-row__label">Total TTC</div>
+              <div class="info-row__value info-row__value--total">{{ memoire.totalTTC }} DT</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="montants-finaux">
+          <div class="montant-card montant-card--encaisse">
+            <div class="montant-card__label">Encaisse</div>
+            <div class="montant-card__value montant-card__value--vert">{{ totalEncaisse }} DT</div>
+          </div>
+          <div class="montant-card montant-card--reste">
+            <div class="montant-card__label">Reste a payer</div>
+            <div class="montant-card__value montant-card__value--rouge">{{ memoire.reste }} DT</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col col--side">
+      <app-timeline-paiement
+        [planifie]="memoire.planifie"
+        [etapeActuelle]="memoire.etapeActuelle"
+        [historique]="historique"
+      ></app-timeline-paiement>
+
+      <div class="card card--table">
+        <div class="card__table-header">
+          <h2 class="card__title">Historique des paiements</h2>
+        </div>
+        <div class="table-wrapper">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>N&#176; PAIEMENT</th>
+                <th>DATE</th>
+                <th>MONTANT</th>
+                <th>MODE</th>
+                <th>REFERENCE</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="paiements.length === 0">
+                <td colspan="5" class="table__empty">Aucun paiement enregistre pour ce memoire.</td>
+              </tr>
+              <tr *ngFor="let p of paiements">
+                <td class="table__link">{{ p.id }}</td>
+                <td>{{ p.date }}</td>
+                <td class="table__strong">{{ p.montant }} DT</td>
+                <td>{{ p.mode }}</td>
+                <td>{{ p.reference }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

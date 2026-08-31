@@ -1,0 +1,98 @@
+<div class="overlay" (click)="onClose()">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <div class="modal__header">
+      <h3 class="modal__title">Contrat {{ contrat?.police }}</h3>
+      <button class="modal__close" (click)="onClose()">&#10005;</button>
+    </div>
+
+    <div class="modal__body" *ngIf="!contrat">
+      Details du contrat non disponibles pour cette police.
+    </div>
+
+    <div class="modal__body" *ngIf="contrat">
+      <div class="grid">
+        <div class="field">
+          <div class="field__label">Client</div>
+          <div class="field__value">{{ contrat.client }}</div>
+        </div>
+        <div class="field">
+          <div class="field__label">Compagnie</div>
+          <div class="field__value">{{ contrat.compagnie }}</div>
+        </div>
+        <div class="field">
+          <div class="field__label">Agence</div>
+          <div class="field__value">{{ contrat.agence }}</div>
+        </div>
+        <div class="field">
+          <div class="field__label">Branche</div>
+          <div class="field__value">{{ contrat.branche }}</div>
+        </div>
+        <div class="field">
+          <div class="field__label">Garantie</div>
+          <div class="field__value">{{ contrat.garantie }}</div>
+        </div>
+        <div class="field">
+          <div class="field__label">Date de souscription</div>
+          <div class="field__value">{{ contrat.dateSouscription }}</div>
+        </div>
+        <div class="field">
+          <div class="field__label">Date d'effet</div>
+          <div class="field__value">{{ contrat.dateEffet }}</div>
+        </div>
+        <div class="field">
+          <div class="field__label">Echeance du contrat</div>
+          <div class="field__value">{{ contrat.dateEcheanceContrat }}</div>
+        </div>
+      </div>
+
+      <div class="vehicule" *ngIf="contrat.vehicule">
+        <div class="field">
+          <div class="field__label">Vehicule</div>
+          <div class="field__value">{{ contrat.vehicule.marque }} {{ contrat.vehicule.modele }}</div>
+        </div>
+        <div class="field">
+          <div class="field__label">Immatriculation</div>
+          <div class="field__value">{{ contrat.vehicule.immatriculation }}</div>
+        </div>
+        <div class="field">
+          <div class="field__label">Mise en circulation</div>
+          <div class="field__value">{{ contrat.vehicule.anneeMiseCirculation }}</div>
+        </div>
+      </div>
+
+      <div class="composition" *ngIf="details">
+        <div class="composition__title">Composition de la prime</div>
+
+        <div class="composition__row">
+          <span>Prime nette - Responsabilite civile</span>
+          <span class="composition__value">{{ format.fmt(contrat.primeRC) }} DT</span>
+        </div>
+        <div class="composition__row">
+          <span>Prime nette - Autres garanties</span>
+          <span class="composition__value">{{ format.fmt(contrat.primeAutresGaranties) }} DT</span>
+        </div>
+        <div class="composition__row">
+          <span>Frais de police (bareme interne 3 %)</span>
+          <span class="composition__value">{{ format.fmt(details.fraisPolice) }} DT</span>
+        </div>
+        <div class="composition__row">
+          <span>Taxe Unique sur les Assurances ({{ fiscalite.tauxTUA(contrat.branche) }}%)</span>
+          <span class="composition__value">{{ format.fmt(details.taxe) }} DT</span>
+        </div>
+        <div class="composition__row" *ngIf="details.fga > 0">
+          <span>Contribution FGA (2% - branche AUTO)</span>
+          <span class="composition__value">{{ format.fmt(details.fga) }} DT</span>
+        </div>
+
+        <div class="composition__total">
+          <span>Prime TTC</span>
+          <span>{{ format.fmt(details.montantDu) }} DT</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal__footer">
+      <button class="btn btn--primary" (click)="onClose()">Fermer</button>
+    </div>
+  </div>
+</div>

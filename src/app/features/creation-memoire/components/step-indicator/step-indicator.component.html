@@ -1,0 +1,14 @@
+<div class="indicator">
+  <ng-container *ngFor="let s of etapes; let last = last">
+    <div class="indicator__step">
+      <div class="indicator__circle" [class.indicator__circle--active]="step >= s.n">
+        <span *ngIf="step > s.n">✓</span>
+        <span *ngIf="step <= s.n">{{ s.n }}</span>
+      </div>
+      <div class="indicator__label" [class.indicator__label--active]="step >= s.n">
+        {{ s.label }}
+      </div>
+    </div>
+    <div *ngIf="!last" class="indicator__line" [class.indicator__line--active]="step >= s.n + 1"></div>
+  </ng-container>
+</div>

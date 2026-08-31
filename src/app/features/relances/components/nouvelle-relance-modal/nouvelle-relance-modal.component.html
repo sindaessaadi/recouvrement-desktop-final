@@ -1,0 +1,53 @@
+<div class="overlay" (click)="onClose()">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <div class="modal__header">
+      <h3 class="modal__title">Nouvelle relance</h3>
+      <button class="modal__close" (click)="onClose()">&#10005;</button>
+    </div>
+
+    <div class="modal__body">
+      <div class="field">
+        <label>N&#176; memoire</label>
+        <select [(ngModel)]="memoire">
+          <option *ngFor="let m of memoiresOptions" [value]="m">{{ m }}</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Client</label>
+        <input type="text" [value]="client" readonly class="field__readonly" />
+      </div>
+
+      <div class="field">
+        <label>Canal</label>
+        <div class="canal-row">
+          <button
+            *ngFor="let c of canaux"
+            type="button"
+            class="canal-btn"
+            [class.canal-btn--active]="canal === c"
+            (click)="choisirCanal(c)"
+          >
+            {{ c }}
+          </button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Message (facultatif)</label>
+        <textarea
+          [(ngModel)]="message"
+          rows="3"
+          placeholder="Rappel des conditions de reglement..."
+        ></textarea>
+      </div>
+
+      <div *ngIf="erreur" class="error-text">{{ erreur }}</div>
+    </div>
+
+    <div class="modal__footer">
+      <button class="btn btn--outline" (click)="onClose()">Annuler</button>
+      <button class="btn btn--primary" (click)="onCreer()"><span class="icon-inline"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"></path><path d="M22 2 15 22l-4-9-9-4 20-7Z"></path></svg></span> Envoyer la relance</button>
+    </div>
+  </div>
+</div>

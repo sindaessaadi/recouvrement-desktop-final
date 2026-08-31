@@ -1,0 +1,104 @@
+/* You can add global styles to this file, and also import other style files */
+/* ───────────────────────────────────────────────
+   Variables globales — Couleurs de la marque STAR
+   ─────────────────────────────────────────────── */
+:root {
+  /* Couleurs principales */
+  --star-primary: #0B6E52;
+  --star-secondary: #3DAA35;
+
+  /* Sidebar */
+  --star-sidebar: #0d3d2e;
+  --star-sidebar-active: #134d3a;
+  --star-sidebar-user: #0a3226;
+  --star-sidebar-text: #a8c9be;
+
+  /* Fonds & bordures */
+  --star-surface: #f7f9f8;
+  --star-border: #e2e8e5;
+  --star-border-light: #eef2f0;
+  --star-border-dark: #cfd8d4;
+
+  /* Textes */
+  --star-text-dark: #1a2e27;
+  --star-text-gray: #5a6b64;
+  --star-text-light: #8a9a93;
+  --star-text-lighter: #b3c0ba;
+
+  /* États (succès / attention / info) */
+  --star-success-bg: #e6f4ea;
+  --star-success-text: #1e7e34;
+  --star-yellow-bg: #fff8e1;
+  --star-yellow-text: #b8860b;
+  --star-info-bg: #e8f0fe;
+  --star-info-text: #1a5fb4;
+
+  /* Couleurs spécifiques au logo (étoile / texte STAR) */
+  --star-logo-green: #90cb45;
+  --star-logo-teal: #076550;
+}
+
+/* Réinitialisation de base */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--star-surface);
+  color: var(--star-text-dark);
+}
+
+/* ───────────────────────────────────────────────
+   Theme sombre — variables surchargees
+   ─────────────────────────────────────────────── */
+body.theme-sombre {
+  --star-surface: #1a1f1c;
+  --star-border: #2e3630;
+  --star-border-light: #262d28;
+  --star-border-dark: #3a443c;
+
+  --star-text-dark: #eef2ef;
+  --star-text-gray: #b8c2bc;
+  --star-text-light: #8a9a93;
+  --star-text-lighter: #6b7a73;
+
+  --star-success-bg: #163d28;
+  --star-yellow-bg: #3d3416;
+  --star-info-bg: #16283d;
+
+  background-color: var(--star-surface);
+  color: var(--star-text-dark);
+}
+
+/* Cartes blanches -> surface sombre legerement plus claire que le fond */
+body.theme-sombre .card,
+body.theme-sombre .kpi,
+body.theme-sombre table,
+body.theme-sombre .modal,
+body.theme-sombre input,
+body.theme-sombre select,
+body.theme-sombre textarea {
+  background-color: #222922 !important;
+  color: var(--star-text-dark) !important;
+  border-color: var(--star-border) !important;
+}
+
+body.theme-sombre thead tr {
+  background-color: #1e251f !important;
+}
+
+body.theme-sombre tbody tr:hover {
+  background-color: #2a322b !important;
+}
+
+/* Icones SVG inline (remplacent les emoji, dont l'affichage depend de la police du systeme) */
+.icon-inline {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: -2px;
+  flex-shrink: 0;
+}

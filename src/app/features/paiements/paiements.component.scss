@@ -1,0 +1,267 @@
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.toast {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 60;
+  background-color: var(--star-text-dark);
+  color: white;
+  font-size: 11px;
+  padding: 10px 16px;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.kpi {
+  background-color: white;
+  border: 1px solid var(--star-border);
+  border-radius: 8px;
+  padding: 16px;
+
+  &__label {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--star-text-light);
+    margin-bottom: 4px;
+  }
+
+  &__value {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--star-text-dark);
+
+    &--primary {
+      color: var(--star-primary);
+    }
+
+    &--danger {
+      color: #dc2626;
+    }
+  }
+
+  &__sub {
+    font-size: 10px;
+    color: var(--star-text-light);
+    margin-top: 4px;
+  }
+}
+
+.taux {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  &__bar {
+    flex: 1;
+    height: 8px;
+    background-color: var(--star-border-light);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  &__fill {
+    height: 100%;
+    background-color: var(--star-primary);
+    border-radius: 999px;
+  }
+}
+
+.card {
+  background-color: white;
+  border: 1px solid var(--star-border);
+  border-radius: 8px;
+  padding: 20px;
+
+  &--table {
+    padding: 0;
+  }
+
+  &__title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--star-text-dark);
+    margin: 0;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--star-border);
+  }
+
+  &__actions {
+    display: flex;
+    gap: 8px;
+  }
+
+  &__footer {
+    background-color: var(--star-surface);
+    padding: 12px 16px;
+    border-top: 1px solid var(--star-border);
+    font-size: 11px;
+    color: var(--star-text-light);
+  }
+}
+
+.filters {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.field {
+  min-width: 140px;
+
+  &--grow {
+    flex: 1;
+  }
+
+  label {
+    display: block;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--star-text-gray);
+    margin-bottom: 4px;
+  }
+
+  input,
+  select {
+    width: 100%;
+    height: 36px;
+    padding: 0 12px;
+    border: 1px solid var(--star-border-dark);
+    border-radius: 6px;
+    font-size: 11px;
+  }
+}
+
+.btn {
+  height: 36px;
+  padding: 0 16px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  border: none;
+
+  &--primary {
+    background-color: var(--star-primary);
+    color: white;
+  }
+
+  &--outline {
+    background-color: white;
+    border: 1px solid var(--star-border-dark);
+    color: var(--star-text-dark);
+  }
+}
+
+.tabs {
+  display: flex;
+  border-bottom: 1px solid var(--star-border);
+
+  &__item {
+    padding: 12px 20px;
+    font-size: 12px;
+    font-weight: 600;
+    border: none;
+    border-bottom: 2px solid transparent;
+    background: none;
+    color: var(--star-text-light);
+    cursor: pointer;
+
+    &--active {
+      color: var(--star-primary);
+      border-bottom-color: var(--star-primary);
+    }
+  }
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+
+  thead tr {
+    background-color: var(--star-surface);
+    border-bottom: 1px solid var(--star-border-light);
+  }
+
+  th {
+    padding: 8px 16px;
+    font-size: 9px;
+    font-weight: 600;
+    color: var(--star-text-light);
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 12px 16px;
+    font-size: 11px;
+    color: var(--star-text-dark);
+    border-bottom: 1px solid var(--star-border-light);
+  }
+
+  tbody tr:hover {
+    background-color: #f9fafb;
+  }
+
+  &__row--anomalie {
+    background-color: #fff7ed;
+  }
+
+  &__nom {
+    font-weight: 700;
+    color: var(--star-primary);
+  }
+
+  &__strong {
+    font-weight: 600;
+  }
+
+  &__center {
+    text-align: center;
+  }
+}
+
+.alerte {
+  color: #ea580c;
+  font-weight: 600;
+  font-size: 11px;
+
+  &--ok {
+    color: var(--star-success-text);
+  }
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  color: var(--star-primary);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
